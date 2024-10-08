@@ -43,7 +43,7 @@ defmodule FemtoPlannerWeb do
         layouts: [html: FemtoPlannerWeb.Layouts]
 
       import Plug.Conn
-      import FemtoPlannerWeb.Gettext
+      use Gettext, backend: FemtoPlannerWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -85,7 +85,7 @@ defmodule FemtoPlannerWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import FemtoPlannerWeb.CoreComponents
-      import FemtoPlannerWeb.Gettext
+      use Gettext, backend: FemtoPlannerWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

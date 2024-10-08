@@ -17,7 +17,7 @@ defmodule FemtoPlannerWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  import FemtoPlannerWeb.Gettext
+  use Gettext, backend: FemtoPlannerWeb.Gettext
 
   @doc """
   Renders a modal.
