@@ -1,7 +1,17 @@
-alias FemtoPlanner.Repo
+import FemtoPlanner.Repo, only: [insert!: 1]
 alias FemtoPlanner.Schedule.PlanItem
 
-Repo.insert!(%PlanItem{
+insert!(%PlanItem{
   name: "読書",
   description: "『走れメロス』を読む"
+})
+
+insert!(%PlanItem{
+  name: "買い物",
+  description: "洗剤を買う"
+})
+
+insert!(%PlanItem{
+  name: "帰省",
+  description: "新幹線の指定席を取る。お土産を買う。"
 })
