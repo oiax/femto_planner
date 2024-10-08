@@ -17,11 +17,6 @@ defmodule FemtoPlannerWeb.Router do
   scope "/", FemtoPlannerWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", HomeLive
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", FemtoPlannerWeb do
-  #   pipe_through :api
-  # end
 end
