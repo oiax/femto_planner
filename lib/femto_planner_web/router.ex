@@ -18,5 +18,7 @@ defmodule FemtoPlannerWeb.Router do
     pipe_through :browser
 
     live "/", HomeLive
+    live "/plan_items", PlanItemLive, :index
+    live "/plan_items/:id", PlanItemLive, :item
   end
 end
