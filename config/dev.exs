@@ -23,9 +23,12 @@ config :femto_planner, FemtoPlannerWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "zg4KTyjDHDPl/axpW5g2Mk7LpPDq9u7ZMxXnQzTiouBr5HitfIfi98BeVrhMyug5",
+  secret_key_base:
+    "zg4KTyjDHDPl/axpW5g2Mk7LpPDq9u7ZMxXnQzTiouBr5HitfIfi98BeVrhMyug5",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:femto_planner, ~w(--sourcemap=inline --watch)]},
+    esbuild:
+      {Esbuild, :install_and_run,
+       [:femto_planner, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:femto_planner, ~w(--watch)]}
   ]
 

@@ -17,7 +17,8 @@ config :femto_planner, FemtoPlanner.Repo,
 # you can enable the server option below.
 config :femto_planner, FemtoPlannerWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "S6yoxJGqZVECpLyW+67vjdDMu5fvdyRj7CCWhM4NpnPVSx9kfxSdgd3Ip1z/XWms",
+  secret_key_base:
+    "S6yoxJGqZVECpLyW+67vjdDMu5fvdyRj7CCWhM4NpnPVSx9kfxSdgd3Ip1z/XWms",
   server: false
 
 # Print only warnings and errors during test
