@@ -29,8 +29,8 @@ insert!(%PlanItem{
 insert!(%PlanItem{
   name: "買い物",
   description: "洗剤を買う",
-  starts_at: shift(time0, day: 1, hour: 16),
-  ends_at: shift(time0, day: 1, hour: 16, minute: 30)
+  starts_at: shift(time0, hour: 16),
+  ends_at: shift(time0, hour: 16, minute: 30)
 })
 
 insert!(%PlanItem{

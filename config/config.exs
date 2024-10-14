@@ -56,6 +56,9 @@ config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 config :femto_planner, FemtoPlanner.Repo,
   migration_timestamps: [type: :utc_datetime_usec]
 
+# Configures the default time zone
+config :femto_planner, default_time_zone: "Asia/Tokyo"
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 

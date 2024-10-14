@@ -24,4 +24,15 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     <% end %>
     """
   end
+
+  defp duration(%{item: item}) do
+    assigns = %{
+      starts_at: item.starts_at,
+      ends_at: item.ends_at
+    }
+
+    ~H"""
+      <%= @starts_at %> 〜 <%= @ends_at %>
+    """
+  end
 end
