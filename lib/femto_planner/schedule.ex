@@ -24,4 +24,16 @@ defmodule FemtoPlanner.Schedule do
     e = DateTime.shift_zone!(item.ends_at, @time_zone)
     %{item | starts_at: s, ends_at: e}
   end
+
+  @abbreviated_day_of_week_names ~w(月 火 水 木 金 土 日)
+
+  def format_datetime(dt, string_format) do
+    Calendar.strftime(
+      dt,
+      string_format,
+      abbreviated_day_of_week_names: fn dow ->
+        Enum.at(@abbreviated_day_of_week_names, dow - 1)
+      end
+    )
+  end
 end

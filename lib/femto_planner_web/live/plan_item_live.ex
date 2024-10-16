@@ -43,9 +43,9 @@ defmodule FemtoPlannerWeb.PlanItemLive do
 
   defp format_starts_at(item) do
     if item.starts_at.year == DateTime.now!(@time_zone).year do
-      strftime(item.starts_at, "%-m月%-d日 %H:%M")
+      Schedule.format_datetime(item.starts_at, "%-m月%-d日（%a） %H:%M")
     else
-      strftime(item.starts_at, "%Y年%-m月%-d日 %H:%M")
+      Schedule.format_datetime(item.starts_at, "%Y年%-m月%-d日（%a） %H:%M")
     end
   end
 
@@ -57,15 +57,15 @@ defmodule FemtoPlannerWeb.PlanItemLive do
         strftime(item.ends_at, "%H:%M")
 
       item.starts_at.year == item.ends_at.year ->
-        strftime(item.ends_at, "%-m月%-d日 %H:%M")
+        Schedule.format_datetime(item.ends_at, "%-m月%-d日（%a） %H:%M")
 
       true ->
-        strftime(item.ends_at, "%Y年%-m月%-d日 %H:%M")
+        Schedule.format_datetime(item.ends_at, "%Y年%-m月%-d日（%a） %H:%M")
     end
   end
 
   defp format_datetime(datetime) do
-    strftime(datetime, "%Y年%-m月%-d日 %H:%M")
+    Schedule.format_datetime(datetime, "%Y年%-m月%-d日（%a） %H:%M")
   end
 
   defp field_name_class,
