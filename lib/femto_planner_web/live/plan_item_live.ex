@@ -14,6 +14,12 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     {:noreply, socket}
   end
 
+  def handle_params(%{"id" => id}, _uri, socket)
+      when socket.assigns.live_action == :item do
+    socket = assign(socket, :plan_item, Schedule.get_plan_item!(id))
+    {:noreply, socket}
+  end
+
   defp description(%{item: item}) do
     assigns = %{
       lines: String.split(item.description, "\n")
@@ -28,9 +34,7 @@ defmodule FemtoPlannerWeb.PlanItemLive do
 
   defp duration(assigns) do
     ~H"""
-      <%= format_starts_at(@item) %>
-      〜
-      <%= format_ends_at(@item) %>
+    <%= format_starts_at(@item) %> 〜 <%= format_ends_at(@item) %>
     """
   end
 
@@ -58,4 +62,9 @@ defmodule FemtoPlannerWeb.PlanItemLive do
         strftime(item.ends_at, "%Y年%-m月%-d日 %H:%M")
     end
   end
+
+  defp field_name_class,
+    do: "bg-base-content text-white py-1 px-2 md:text-right"
+
+  defp field_value_class, do: "py-1 px-2"
 end

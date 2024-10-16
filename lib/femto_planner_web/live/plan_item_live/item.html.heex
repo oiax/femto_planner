@@ -1,1 +1,14 @@
-<div>Item</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-1">
+  <div class={field_name_class()}>件名</div>
+  <div class={field_value_class()}><%= @plan_item.name %></div>
+  <div class={field_name_class()}>説明</div>
+  <div class={field_value_class()}><.description item={@plan_item} /></div>
+  <div class={field_name_class()}>開始時刻</div>
+  <div class={field_value_class()}>
+    <%= strftime(@plan_item.starts_at, "%Y年%-m月%-d日 %H:%M") %>
+  </div>
+  <div class={field_name_class()}>終了時刻</div>
+  <div class={field_value_class()}>
+    <%= strftime(@plan_item.ends_at, "%Y年%-m月%-d日 %H:%M") %>
+  </div>
+</div>
