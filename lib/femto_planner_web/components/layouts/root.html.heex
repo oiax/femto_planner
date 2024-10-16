@@ -8,6 +8,16 @@
       <%= assigns[:page_title] || "FemtoPlanner" %>
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    <link rel="stylesheet" href={google_fonts_url()} />
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
     <script
       defer
       phx-track-static

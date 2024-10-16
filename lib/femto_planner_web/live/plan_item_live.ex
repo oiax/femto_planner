@@ -2,6 +2,7 @@ defmodule FemtoPlannerWeb.PlanItemLive do
   use FemtoPlannerWeb, :live_view
   import Calendar, only: [strftime: 2]
   alias FemtoPlanner.Schedule
+  alias FemtoPlannerWeb.Shared
 
   embed_templates "plan_item_live/*"
 
@@ -61,6 +62,10 @@ defmodule FemtoPlannerWeb.PlanItemLive do
       true ->
         strftime(item.ends_at, "%Y年%-m月%-d日 %H:%M")
     end
+  end
+
+  defp format_datetime(datetime) do
+    strftime(datetime, "%Y年%-m月%-d日 %H:%M")
   end
 
   defp field_name_class,
