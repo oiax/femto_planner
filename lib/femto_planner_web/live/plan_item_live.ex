@@ -41,7 +41,7 @@ defmodule FemtoPlannerWeb.PlanItemLive do
 
   defp duration(assigns) do
     ~H"""
-    <%= format_starts_at(@item) %> 〜 <%= format_ends_at(@item) %>
+    <%= format_starts_at(@item) %> - <%= format_ends_at(@item) %>
     """
   end
 
@@ -49,9 +49,9 @@ defmodule FemtoPlannerWeb.PlanItemLive do
 
   defp format_starts_at(item) do
     if item.starts_at.year == DateTime.now!(@time_zone).year do
-      Schedule.format_datetime(item.starts_at, "%-m月%-d日（%a） %H:%M")
+      Schedule.format_datetime(item.starts_at, "%m-%d (%a) %H:%M")
     else
-      Schedule.format_datetime(item.starts_at, "%Y年%-m月%-d日（%a） %H:%M")
+      Schedule.format_datetime(item.starts_at, "%Y-%m-%d (%a) %H:%M")
     end
   end
 
@@ -63,15 +63,15 @@ defmodule FemtoPlannerWeb.PlanItemLive do
         strftime(item.ends_at, "%H:%M")
 
       item.starts_at.year == item.ends_at.year ->
-        Schedule.format_datetime(item.ends_at, "%-m月%-d日（%a） %H:%M")
+        Schedule.format_datetime(item.ends_at, "%m-%d (%a) %H:%M")
 
       true ->
-        Schedule.format_datetime(item.ends_at, "%Y年%-m月%-d日（%a） %H:%M")
+        Schedule.format_datetime(item.ends_at, "%Y-%m-%d (%a) %H:%M")
     end
   end
 
   defp format_datetime(datetime) do
-    Schedule.format_datetime(datetime, "%Y年%-m月%-d日（%a） %H:%M")
+    Schedule.format_datetime(datetime, "%Y-%m-%d (%a) %H:%M")
   end
 
   defp field_name_class,

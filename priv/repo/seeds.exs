@@ -20,22 +20,22 @@ time1 =
   |> DateTime.shift_zone!("Etc/UTC")
 
 insert!(%PlanItem{
-  name: "読書",
-  description: "『走れメロス』を読む",
+  name: "Team Meeting",
+  description: "Project progress update",
   starts_at: shift(time0, day: 1, hour: 10),
   ends_at: shift(time0, day: 1, hour: 11)
 })
 
 insert!(%PlanItem{
-  name: "買い物",
-  description: "洗剤を買う",
+  name: "Coffee with Friends",
+  description: "Location: The Coffee House",
   starts_at: shift(time0, hour: 16),
-  ends_at: shift(time0, hour: 16, minute: 30)
+  ends_at: shift(time0, hour: 17, minute: 30)
 })
 
 insert!(%PlanItem{
-  name: "帰省",
-  description: "新幹線の指定席を取る。\nお土産を買う。",
+  name: "Going back to my parents' house",
+  description: "Get reserved seats on the train.\nBuy a souvenir.",
   starts_at: shift(time1, year: 1, day: -2),
   ends_at: shift(time1, year: 1, day: 3)
 })
