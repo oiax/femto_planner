@@ -1,19 +1,19 @@
 <nav class="flex justify-end md:mb-2">
   <.link patch={~p(/plan_items)} class="md:btn md:btn-neutral">
     <Shared.icon name="menu" />
-    <span class="hidden md:inline">予定表へ戻る</span>
+    <span class="hidden md:inline">Back to schedule</span>
   </.link>
 </nav>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-1">
-  <div class={field_name_class()}>件名</div>
+  <div class={field_name_class()}>Name</div>
   <div class={field_value_class()}><%= @plan_item.name %></div>
-  <div class={field_name_class()}>説明</div>
+  <div class={field_name_class()}>Description</div>
   <div class={field_value_class()}><.description item={@plan_item} /></div>
-  <div class={field_name_class()}>開始時刻</div>
+  <div class={field_name_class()}>Start date and time</div>
   <div class={field_value_class()}>
     <%= format_datetime(@plan_item.starts_at) %>
   </div>
-  <div class={field_name_class()}>終了時刻</div>
+  <div class={field_name_class()}>End date and time</div>
   <div class={field_value_class()}>
     <%= format_datetime(@plan_item.ends_at) %>
   </div>

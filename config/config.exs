@@ -16,7 +16,10 @@ config :femto_planner, FemtoPlannerWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: FemtoPlannerWeb.ErrorHTML, json: FemtoPlannerWeb.ErrorJSON],
+    formats: [
+      html: FemtoPlannerWeb.ErrorHTML,
+      json: FemtoPlannerWeb.ErrorJSON
+    ],
     layout: false
   ],
   pubsub_server: FemtoPlanner.PubSub,

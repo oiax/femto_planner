@@ -19,6 +19,21 @@ defmodule FemtoPlanner.Schedule do
     |> convert_time_zone()
   end
 
+  def build_plan_item do
+    current_time =
+      DateTime.shift_zone!(DateTime.utc_now(:second), @time_zone)
+
+    beginning_of_hour = %{current_time | minute: 0, second: 0}
+
+    new_plan_item =
+      %PlanItem{
+        starts_at: DateTime.add(beginning_of_hour, 1, :hour),
+        ends_at: DateTime.add(beginning_of_hour, 2, :hour)
+      }
+
+    PlanItem.changeset(new_plan_item, %{})
+  end
+
   defp convert_time_zone(item) do
     s = DateTime.shift_zone!(item.starts_at, @time_zone)
     e = DateTime.shift_zone!(item.ends_at, @time_zone)
