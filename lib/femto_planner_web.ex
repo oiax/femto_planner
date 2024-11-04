@@ -84,7 +84,7 @@ defmodule FemtoPlannerWeb do
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
-      import FemtoPlannerWeb.CoreComponents
+      # import FemtoPlannerWeb.CoreComponents
       use Gettext, backend: FemtoPlannerWeb.Gettext
 
       # Shortcut for generating JS commands
