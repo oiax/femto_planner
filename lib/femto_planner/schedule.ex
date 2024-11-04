@@ -25,7 +25,7 @@ defmodule FemtoPlanner.Schedule do
     %{item | starts_at: s, ends_at: e}
   end
 
-  @abbreviated_day_of_week_names ~w(月 火 水 木 金 土 日)
+  @abbreviated_day_of_week_names ~w(Mon Tue Wed Thu Fri Sat Sun)
 
   def format_datetime(dt, string_format) do
     Calendar.strftime(
