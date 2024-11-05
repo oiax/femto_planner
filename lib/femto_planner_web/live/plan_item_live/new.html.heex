@@ -1,14 +1,5 @@
 <.form :let={f} for={@changeset}>
-  <div class="form-control p-4">
-    <label for={f[:name].id} class="font-bold">Name</label>
-    <input
-      type="text"
-      id={f[:name].id}
-      name={f[:name].name}
-      value={f[:name].value}
-      class="input input-bordered border-gray-500"
-    />
-  </div>
+  <Shared.text_input field={f[:name]} label="Name" />
   <div class="form-control p-4">
     <div>
       <label for={f[:description].id} class="font-bold">Description</label>
