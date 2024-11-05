@@ -1,17 +1,10 @@
 <.form :let={f} for={@changeset}>
   <Shared.text_input field={f[:name]} label="Name" />
-  <div class="form-control p-4">
-    <div>
-      <label for={f[:description].id} class="font-bold">Description</label>
-      <small>(Optional)</small>
-    </div>
-    <textarea
-      id={f[:description].id}
-      class="textarea textarea-bordered border-gray-500"
-    >
-      <%= f[:description].value %>
-    </textarea>
-  </div>
+  <Shared.textarea
+    field={f[:description]}
+    label="Description"
+    optional={true}
+  />
   <div class="grid grid-cols-1 md:grid-cols-2">
     <div class="form-control p-4">
       <label for={f[:starts_at].id} class="font-bold">

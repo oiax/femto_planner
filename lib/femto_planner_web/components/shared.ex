@@ -11,11 +11,19 @@ defmodule FemtoPlannerWeb.Shared do
 
   attr :field, Phoenix.HTML.FormField, required: true
   attr :label, :string, required: true
+  attr :optional, :boolean
 
   def text_input(assigns) do
+    assigns = Map.put_new(assigns, :optional, false)
+
     ~H"""
     <div class="form-control p-4">
-      <label for={@field.id} class="font-bold"><%= @label %></label>
+      <div>
+        <label for={@field.id} class="font-bold"><%= @label %></label>
+        <%= if @optional do %>
+          <small>(Optional)</small>
+        <% end %>
+      </div>
       <input
         type="text"
         id={@field.id}
@@ -23,6 +31,31 @@ defmodule FemtoPlannerWeb.Shared do
         value={@field.value}
         class="input input-bordered border-gray-500"
       />
+    </div>
+    """
+  end
+
+  attr :field, Phoenix.HTML.FormField, required: true
+  attr :label, :string, required: true
+  attr :optional, :boolean
+
+  def textarea(assigns) do
+    assigns = Map.put_new(assigns, :optional, false)
+
+    ~H"""
+    <div class="form-control p-4">
+      <div>
+        <label for={@field.id} class="font-bold"><%= @label %></label>
+        <%= if @optional do %>
+          <small>(Optional)</small>
+        <% end %>
+      </div>
+      <textarea
+        id={@field.id}
+        class="textarea textarea-bordered border-gray-500"
+      >
+        <%= @field.value %>
+      </textarea>
     </div>
     """
   end
