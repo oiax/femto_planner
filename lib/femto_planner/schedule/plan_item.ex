@@ -11,10 +11,13 @@ defmodule FemtoPlanner.Schedule.PlanItem do
     timestamps(type: :utc_datetime_usec)
   end
 
+  @required_fields [:name, :starts_at, :ends_at]
+  @optional_fields [:description]
+
   @doc false
   def changeset(plan_item, attrs) do
     plan_item
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
   end
 end

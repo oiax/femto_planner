@@ -34,6 +34,12 @@ defmodule FemtoPlanner.Schedule do
     PlanItem.changeset(new_plan_item, %{})
   end
 
+  def create_plan_item(attrs) do
+    %PlanItem{}
+    |> PlanItem.changeset(attrs)
+    |> Repo.insert()
+  end
+
   defp convert_time_zone(item) do
     s = DateTime.shift_zone!(item.starts_at, @time_zone)
     e = DateTime.shift_zone!(item.ends_at, @time_zone)

@@ -52,10 +52,9 @@ defmodule FemtoPlannerWeb.Shared do
       </div>
       <textarea
         id={@field.id}
+        name={@field.name}
         class="textarea textarea-bordered border-gray-500"
-      >
-        <%= @field.value %>
-      </textarea>
+      ><%= @field.value %></textarea>
     </div>
     """
   end

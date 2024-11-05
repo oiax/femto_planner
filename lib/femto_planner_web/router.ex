@@ -20,6 +20,6 @@ defmodule FemtoPlannerWeb.Router do
     live "/", HomeLive
     live "/plan_items", PlanItemLive, :index
     live "/plan_items/new", PlanItemLive, :new
-    live "/plan_items/:id", PlanItemLive, :item
+    live "/plan_items/:id", PlanItemLive, :show
   end
 end

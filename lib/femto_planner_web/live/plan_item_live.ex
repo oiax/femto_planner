@@ -28,6 +28,18 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     {:noreply, socket}
   end
 
+  def handle_event("save", %{"plan_item" => attrs}, socket) do
+    case Schedule.create_plan_item(attrs) do
+      {:ok, plan_item} ->
+        socket = push_patch(socket, to: ~p(/plan_items/#{plan_item.id}))
+        {:noreply, socket}
+
+      {:error, changeset} ->
+        socket = assign(socket, :changeset, changeset)
+        {:noreply, socket}
+    end
+  end
+
   defp description(%{item: item}) do
     assigns = %{
       lines: String.split(item.description, "\n")
