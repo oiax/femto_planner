@@ -14,7 +14,7 @@ defmodule FemtoPlannerWeb.Shared do
   attr :optional, :boolean
 
   def text_input(assigns) do
-    assigns = assign(assigns, :optional, false)
+    assigns = assign_new(assigns, :optional, fn -> false end)
 
     class =
       if assigns.field.errors == [] do

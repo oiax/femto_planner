@@ -3,8 +3,8 @@ defmodule FemtoPlanner.Schedule.PlanItem do
   import Ecto.Changeset
 
   schema "plan_items" do
-    field :name, :string
-    field :description, :string
+    field :name, :string, default: ""
+    field :description, :string, default: ""
     field :starts_at, :utc_datetime
     field :ends_at, :utc_datetime
 
