@@ -14,7 +14,16 @@ defmodule FemtoPlannerWeb.Shared do
   attr :optional, :boolean
 
   def text_input(assigns) do
-    assigns = Map.put_new(assigns, :optional, false)
+    assigns = assign(assigns, :optional, false)
+
+    class =
+      if assigns.field.errors == [] do
+        "input input-bordered border-gray-500"
+      else
+        "input input-bordered border-error border-2"
+      end
+
+    assigns = assign(assigns, :class, class)
 
     ~H"""
     <div class="form-control p-4">
@@ -29,8 +38,14 @@ defmodule FemtoPlannerWeb.Shared do
         id={@field.id}
         name={@field.name}
         value={@field.value}
-        class="input input-bordered border-gray-500"
+        class={@class}
       />
+      <%= for {error_message, _opts} <- @field.errors do %>
+        <div role="alert" class="text-error m-2 flex gap-1">
+          <.icon name="error" />
+          <%= error_message %>
+        </div>
+      <% end %>
     </div>
     """
   end
