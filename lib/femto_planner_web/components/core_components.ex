@@ -120,11 +120,14 @@ defmodule FemtoPlannerWeb.CoreComponents do
     doc: "the optional inner block that renders the flash message"
 
   def flash(assigns) do
-    assigns = assign_new(assigns, :id, fn -> "flash-#{assigns.kind}" end)
+    assigns =
+      assign_new(assigns, :id, fn -> "flash-#{assigns.kind}" end)
 
     ~H"""
     <div
-      :if={msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @kind)}
+      :if={
+        msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @kind)
+      }
       id={@id}
       phx-click={
         JS.push("lv:clear-flash", value: %{key: @kind}) |> hide("##{@id}")
@@ -228,7 +231,9 @@ defmodule FemtoPlannerWeb.CoreComponents do
         </:actions>
       </.simple_form>
   """
-  attr :for, :any, required: true, doc: "the data structure for the form"
+  attr :for, :any,
+    required: true,
+    doc: "the data structure for the form"
 
   attr :as, :any,
     default: nil,
@@ -240,7 +245,9 @@ defmodule FemtoPlannerWeb.CoreComponents do
     doc: "the arbitrary HTML attributes to apply to the form tag"
 
   slot :inner_block, required: true
-  slot :actions, doc: "the slot for form actions, such as a submit button"
+
+  slot :actions,
+    doc: "the slot for form actions, such as a submit button"
 
   def simple_form(assigns) do
     ~H"""
@@ -331,7 +338,10 @@ defmodule FemtoPlannerWeb.CoreComponents do
 
   attr :errors, :list, default: []
   attr :checked, :boolean, doc: "the checked flag for checkbox inputs"
-  attr :prompt, :string, default: nil, doc: "the prompt for select inputs"
+
+  attr :prompt, :string,
+    default: nil,
+    doc: "the prompt for select inputs"
 
   attr :options, :list,
     doc: "the options to pass to Phoenix.HTML.Form.options_for_select/2"
@@ -347,7 +357,9 @@ defmodule FemtoPlannerWeb.CoreComponents do
 
   def input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
     errors =
-      if Phoenix.Component.used_input?(field), do: field.errors, else: []
+      if Phoenix.Component.used_input?(field),
+        do: field.errors,
+        else: []
 
     assigns
     |> assign(field: nil, id: assigns.id || field.id)
@@ -503,7 +515,10 @@ defmodule FemtoPlannerWeb.CoreComponents do
         <h1 class="text-lg font-semibold leading-8 text-zinc-800">
           <%= render_slot(@inner_block) %>
         </h1>
-        <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-zinc-600">
+        <p
+          :if={@subtitle != []}
+          class="mt-2 text-sm leading-6 text-zinc-600"
+        >
           <%= render_slot(@subtitle) %>
         </p>
       </div>
@@ -548,7 +563,9 @@ defmodule FemtoPlannerWeb.CoreComponents do
   def table(assigns) do
     assigns =
       with %{rows: %Phoenix.LiveView.LiveStream{}} <- assigns do
-        assign(assigns, row_id: assigns.row_id || fn {id, _item} -> id end)
+        assign(assigns,
+          row_id: assigns.row_id || fn {id, _item} -> id end
+        )
       end
 
     ~H"""
@@ -566,7 +583,9 @@ defmodule FemtoPlannerWeb.CoreComponents do
         </thead>
         <tbody
           id={@id}
-          phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
+          phx-update={
+            match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"
+          }
           class="relative divide-y divide-zinc-100 border-t border-zinc-200 text-sm leading-6 text-zinc-700"
         >
           <tr
@@ -773,6 +792,7 @@ defmodule FemtoPlannerWeb.CoreComponents do
   Translates the errors for a field from a keyword list of errors.
   """
   def translate_errors(errors, field) when is_list(errors) do
-    for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
+    for {^field, {msg, opts}} <- errors,
+        do: translate_error({msg, opts})
   end
 end

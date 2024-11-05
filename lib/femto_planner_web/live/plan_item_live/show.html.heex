@@ -8,7 +8,9 @@
   <div class={field_name_class()}>Name</div>
   <div class={field_value_class()}><%= @plan_item.name %></div>
   <div class={field_name_class()}>Description</div>
-  <div class={field_value_class()}><.description item={@plan_item} /></div>
+  <div class={field_value_class()}>
+    <.description item={@plan_item} />
+  </div>
   <div class={field_name_class()}>Start date and time</div>
   <div class={field_value_class()}>
     <%= format_datetime(@plan_item.starts_at) %>

@@ -29,7 +29,8 @@ config :femto_planner, FemtoPlannerWeb.Endpoint,
     esbuild:
       {Esbuild, :install_and_run,
        [:femto_planner, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:femto_planner, ~w(--watch)]}
+    tailwind:
+      {Tailwind, :install_and_run, [:femto_planner, ~w(--watch)]}
   ]
 
 # ## SSL Support

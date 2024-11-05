@@ -80,7 +80,10 @@ defmodule FemtoPlanner.MixProject do
         "tailwind.install --if-missing",
         "esbuild.install --if-missing"
       ],
-      "assets.build": ["tailwind femto_planner", "esbuild femto_planner"],
+      "assets.build": [
+        "tailwind femto_planner",
+        "esbuild femto_planner"
+      ],
       "assets.deploy": [
         "tailwind femto_planner --minify",
         "esbuild femto_planner --minify",
