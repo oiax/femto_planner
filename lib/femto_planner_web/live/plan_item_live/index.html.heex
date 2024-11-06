@@ -1,4 +1,11 @@
 <div class="p-4">
+  <nav class="flex justify-end">
+    <.link patch={~p(/plan_items/new)} class="md:btn md:btn-accent mr-2">
+      <Shared.icon name="add" />
+      <span class="hidden md:inline">Add a schedule item</span>
+    </.link>
+  </nav>
+
   <%= for item <- @plan_items do %>
     <div class="grid grid-cols-1 md:grid-cols-2 bg-base-300 m-2 p-2">
       <div class="flex justify-between">

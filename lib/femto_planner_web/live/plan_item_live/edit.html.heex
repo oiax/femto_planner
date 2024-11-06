@@ -1,6 +1,12 @@
 <.form :let={f} for={@changeset} phx-submit="update">
   <.fields f={f} />
   <div class="flex justify-end p-4">
+    <.link
+      patch={~p(/plan_items/#{@changeset.data.id})}
+      class="btn btn-neutral mr-2"
+    >
+      Cancel
+    </.link>
     <button class="btn btn-primary">
       Update
     </button>

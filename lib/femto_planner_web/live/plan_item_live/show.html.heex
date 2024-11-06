@@ -1,9 +1,12 @@
 <nav class="flex justify-end md:mb-2">
-  <.link patch={~p(/plan_items)} class="md:btn md:btn-neutral mr-2">
+  <.link patch={~p(/plan_items)} class="md:btn md:btn-neutral">
     <Shared.icon name="menu" />
     <span class="hidden md:inline">Back to schedule</span>
   </.link>
-  <.link patch={~p(/plan_items/#{@plan_item.id}/edit)} class="md:btn md:btn-primary">
+  <.link
+    patch={~p(/plan_items/#{@plan_item.id}/edit)}
+    class="md:btn md:btn-primary ml-2"
+  >
     <Shared.icon name="edit" />
     <span class="hidden md:inline">Edit</span>
   </.link>

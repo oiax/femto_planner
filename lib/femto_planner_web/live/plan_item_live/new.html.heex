@@ -1,6 +1,9 @@
 <.form :let={f} for={@changeset} phx-submit="create">
   <.fields f={f} />
   <div class="flex justify-end p-4">
+    <.link patch={~p(/plan_items)} class="btn btn-neutral mr-2">
+      Cancel
+    </.link>
     <button class="btn btn-accent">
       Create
     </button>
