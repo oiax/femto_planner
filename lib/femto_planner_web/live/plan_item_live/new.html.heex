@@ -1,17 +1,5 @@
 <.form :let={f} for={@changeset} phx-submit="create">
-  <Shared.text_input field={f[:name]} label="Name" />
-  <Shared.textarea
-    field={f[:description]}
-    label="Description"
-    optional={true}
-  />
-  <div class="grid grid-cols-1 md:grid-cols-2">
-    <Shared.text_input
-      field={f[:starts_at]}
-      label="Start date and time"
-    />
-    <Shared.text_input field={f[:ends_at]} label="Start date and time" />
-  </div>
+  <.fields f={f} />
   <div class="flex justify-end p-4">
     <button class="btn btn-accent">
       Create
