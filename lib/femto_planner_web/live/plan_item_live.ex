@@ -28,7 +28,7 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     {:noreply, socket}
   end
 
-  def handle_event("save", %{"plan_item" => attrs}, socket) do
+  def handle_event("create", %{"plan_item" => attrs}, socket) do
     case Schedule.create_plan_item(attrs) do
       {:ok, plan_item} ->
         socket = push_patch(socket, to: ~p(/plan_items/#{plan_item.id}))

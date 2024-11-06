@@ -1,4 +1,4 @@
-<.form :let={f} for={@changeset} phx-submit="save">
+<.form :let={f} for={@changeset} phx-submit="create">
   <Shared.text_input field={f[:name]} label="Name" />
   <Shared.textarea
     field={f[:description]}
@@ -14,7 +14,7 @@
   </div>
   <div class="flex justify-end p-4">
     <button class="btn btn-accent">
-      Save
+      Create
     </button>
   </div>
 </.form>
