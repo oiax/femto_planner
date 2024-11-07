@@ -1,0 +1,8 @@
+<div>
+  <.link patch={~p(/plan_items/#{@item.id}/edit)} class={@class}>
+    <Shared.icon name="edit" />
+  </.link>
+  <button phx-click="delete" phx-value-id={@item.id} class={@class}>
+    <Shared.icon name="delete" />
+  </button>
+</div>
