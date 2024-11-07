@@ -12,20 +12,41 @@
         <.link patch={~p(/plan_items/#{item.id})} class="font-bold">
           <%= item.name %>
         </.link>
-        <.link patch={~p(/plan_items/#{item.id}/edit)} class="md:hidden">
-          <Shared.icon name="edit" />
-        </.link>
+        <div>
+          <.link
+            patch={~p(/plan_items/#{item.id}/edit)}
+            class="md:hidden"
+          >
+            <Shared.icon name="edit" />
+          </.link>
+          <button
+            phx-click="delete"
+            phx-value-id={item.id}
+            class="md:hidden"
+          >
+            <Shared.icon name="delete" />
+          </button>
+        </div>
       </div>
       <div class="flex justify-between">
         <div>
           <.description item={item} />
         </div>
-        <.link
-          patch={~p(/plan_items/#{item.id}/edit)}
-          class="hidden md:block"
-        >
-          <Shared.icon name="edit" />
-        </.link>
+        <div>
+          <.link
+            patch={~p(/plan_items/#{item.id}/edit)}
+            class="hidden md:inline"
+          >
+            <Shared.icon name="edit" />
+          </.link>
+          <button
+            phx-click="delete"
+            phx-value-id={item.id}
+            class="hidden md:inline"
+          >
+            <Shared.icon name="delete" />
+          </button>
+        </div>
       </div>
       <div class="col-span-1 md:col-span-2 text-sm">
         <.duration item={item} />
