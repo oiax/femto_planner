@@ -8,17 +8,37 @@
 
   <%= for item <- @plan_items do %>
     <div class="grid grid-cols-1 md:grid-cols-2 bg-base-300 m-2 p-2">
+      <%= if to_string(item.id) == @id_of_plan_item_to_be_deleted do %>
+        <div class="
+          md:col-span-2
+          bg-warning
+          rounded
+          rounde-lg
+          mb-4
+          p-2
+          flex
+          items-center
+        ">
+          <.deletion_confirmation item={item} />
+        </div>
+      <% end %>
       <div class="flex justify-between">
         <.link patch={~p(/plan_items/#{item.id})} class="font-bold">
           <%= item.name %>
         </.link>
-        <.edit_and_delete_icons item={item} class="md:hidden" />
+        <div class="md:hidden">
+          <.edit_icon plan_item={item} {assigns} />
+          <.delete_icon plan_item={item} {assigns} />
+        </div>
       </div>
       <div class="flex justify-between">
         <div>
           <.description item={item} />
         </div>
-        <.edit_and_delete_icons item={item} class="hidden md:inline" />
+        <div class="hidden md:block">
+          <.edit_icon plan_item={item} {assigns} />
+          <.delete_icon plan_item={item} {assigns} />
+        </div>
       </div>
       <div class="col-span-1 md:col-span-2 text-sm">
         <.duration item={item} />

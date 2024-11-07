@@ -13,7 +13,11 @@ defmodule FemtoPlannerWeb.PlanItemLive do
 
   def handle_params(_params, _uri, socket)
       when socket.assigns.live_action == :index do
-    socket = assign(socket, :plan_items, Schedule.list_plan_items())
+    socket =
+      socket
+      |> assign(:plan_items, Schedule.list_plan_items())
+      |> assign(:id_of_plan_item_to_be_deleted, nil)
+
     {:noreply, socket}
   end
 
@@ -25,7 +29,11 @@ defmodule FemtoPlannerWeb.PlanItemLive do
 
   def handle_params(%{"id" => id}, _uri, socket)
       when socket.assigns.live_action == :show do
-    socket = assign(socket, :plan_item, Schedule.get_plan_item!(id))
+    socket =
+      socket
+      |> assign(:plan_item, Schedule.get_plan_item!(id))
+      |> assign(:id_of_plan_item_to_be_deleted, nil)
+
     {:noreply, socket}
   end
 
@@ -67,8 +75,18 @@ defmodule FemtoPlannerWeb.PlanItemLive do
   end
 
   def handle_event("delete", %{"id" => id}, socket) do
+    socket = assign(socket, :id_of_plan_item_to_be_deleted, id)
+    {:noreply, socket}
+  end
+
+  def handle_event("do_delete", %{"id" => id}, socket) do
     Schedule.delete_plan_item(id)
     socket = push_patch(socket, to: ~p(/plan_items))
+    {:noreply, socket}
+  end
+
+  def handle_event("cancel", _params, socket) do
+    socket = assign(socket, :id_of_plan_item_to_be_deleted, nil)
     {:noreply, socket}
   end
 
@@ -123,4 +141,68 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     do: "bg-base-content text-white py-1 px-2 md:text-right"
 
   defp field_value_class, do: "py-1 px-2"
+
+  defp edit_icon(assigns) do
+    ~H"""
+    <.link patch={~p(/plan_items/#{@plan_item.id}/edit)}>
+      <Shared.icon name="edit" />
+    </.link>
+    """
+  end
+
+  defp delete_icon(assigns) do
+    ~H"""
+    <button
+      type="button"
+      phx-click="delete"
+      phx-value-id={@plan_item.id}
+      class="disabled:opacity-25"
+      disabled={@id_of_plan_item_to_be_deleted}
+    >
+      <Shared.icon name="delete" />
+    </button>
+    """
+  end
+
+  defp back_button(assigns) do
+    ~H"""
+    <.link patch={~p(/plan_items)} class="md:btn md:btn-neutral">
+      <Shared.icon name="menu" />
+      <span class="hidden md:inline">Back to schedule</span>
+    </.link>
+    """
+  end
+
+  defp edit_button(assigns) do
+    ~H"""
+    <.link
+      patch={~p(/plan_items/#{@plan_item.id}/edit)}
+      class="md:btn md:btn-primary ml-2"
+    >
+      <Shared.icon name="edit" />
+      <span class="hidden md:inline">Edit</span>
+    </.link>
+    """
+  end
+
+  defp delete_button(assigns) do
+    ~H"""
+    <button
+      type="button"
+      phx-click="delete"
+      phx-value-id={@plan_item.id}
+      class="
+        md:btn
+        md:btn-warning
+        ml-2
+        disabled:opacity-25
+        md:disabled:opacity-100
+      "
+      disabled={@id_of_plan_item_to_be_deleted}
+    >
+      <Shared.icon name="delete" />
+      <span class="hidden md:inline">Delete</span>
+    </button>
+    """
+  end
 end
