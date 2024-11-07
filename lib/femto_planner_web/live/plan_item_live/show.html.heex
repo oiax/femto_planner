@@ -10,6 +10,15 @@
     <Shared.icon name="edit" />
     <span class="hidden md:inline">Edit</span>
   </.link>
+  <button
+    type="button"
+    phx-click="delete"
+    phx-value-id={@plan_item.id}
+    class="md:btn md:btn-warning ml-2"
+  >
+    <Shared.icon name="delete" />
+    <span class="hidden md:inline">Delete</span>
+  </button>
 </nav>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-1">
   <div class={field_name_class()}>Name</div>
