@@ -31,11 +31,15 @@ defmodule FemtoPlanner.Schedule do
         ends_at: DateTime.add(beginning_of_hour, 2, :hour)
       }
 
-    PlanItem.changeset(new_plan_item, %{})
+    new_plan_item
+    |> populate_virtual_fields()
+    |> PlanItem.changeset(%{})
   end
 
   def change_plan_item(plan_item) do
-    PlanItem.changeset(plan_item, %{})
+    plan_item
+    |> populate_virtual_fields()
+    |> PlanItem.changeset(%{})
   end
 
   def create_plan_item(attrs) do
@@ -60,6 +64,17 @@ defmodule FemtoPlanner.Schedule do
     s = DateTime.shift_zone!(item.starts_at, @time_zone)
     e = DateTime.shift_zone!(item.ends_at, @time_zone)
     %{item | starts_at: s, ends_at: e}
+  end
+
+  defp populate_virtual_fields(item) do
+    Map.merge(item, %{
+      s_date: DateTime.to_date(item.starts_at),
+      s_hour: item.starts_at.hour,
+      s_minute: item.starts_at.minute,
+      e_date: DateTime.to_date(item.ends_at),
+      e_hour: item.ends_at.hour,
+      e_minute: item.ends_at.minute
+    })
   end
 
   @abbreviated_day_of_week_names ~w(Mon Tue Wed Thu Fri Sat Sun)
