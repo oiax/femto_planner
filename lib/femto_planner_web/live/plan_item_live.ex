@@ -226,4 +226,48 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     </button>
     """
   end
+
+  defp link_to_index(%{live_action: :index} = assigns) do
+    ~H"""
+    <button type="button" class={active_tab_class()}>
+      <Shared.icon name="list" />
+      Schedule
+    </button>
+    """
+  end
+
+  defp link_to_index(assigns) do
+    ~H"""
+    <.link patch={~p(/plan_items)} class={tab_class()}>
+      <Shared.icon name="list" />
+      Schedule
+    </.link>
+    """
+  end
+
+  defp link_to_today(%{live_action: :today} = assigns) do
+    ~H"""
+    <button type="button" class={active_tab_class()}>
+      <Shared.icon name="list" />
+      Today's Schedule
+    </button>
+    """
+  end
+
+  defp link_to_today(assigns) do
+    ~H"""
+    <.link patch={~p(/plan_items/today)} class={tab_class()}>
+      <Shared.icon name="list" />
+      Today's Schedule
+    </.link>
+    """
+  end
+
+  defp active_tab_class do
+    tab_class() <> " tab-active cursor-default"
+  end
+
+  def tab_class do
+    "tab [--tab-border-color:#6b7280]"
+  end
 end

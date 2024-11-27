@@ -1,5 +1,9 @@
 <div class="p-4">
-  <nav class="flex justify-end">
+  <nav class="flex justify-between">
+    <div class="tabs tabs-lifted md:tabs-lg ml-2">
+      <.link_to_index {assigns} />
+      <.link_to_today {assigns} />
+    </div>
     <.link patch={~p(/plan_items/new)} class="md:btn md:btn-accent mr-2">
       <Shared.icon name="add" />
       <span class="hidden md:inline">Add a schedule item</span>
