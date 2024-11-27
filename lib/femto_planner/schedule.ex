@@ -19,14 +19,16 @@ defmodule FemtoPlanner.Schedule do
     t1 = DateTime.add(t0, 1, :day)
 
     from(pi in PlanItem,
-      where: pi.starts_at >= ^t0 and pi.starts_at < ^t1
+      where:
+        (pi.starts_at >= ^t0 and pi.starts_at < ^t1) or
+          (pi.ends_at >= ^t0 and pi.ends_at <= ^t1)
     )
     |> do_list_plan_items()
   end
 
   defp do_list_plan_items(query) do
     query
-    |> order_by([pi], [asc: pi.starts_at])
+    |> order_by([pi], asc: pi.starts_at)
     |> Repo.all()
     |> Enum.map(&convert_time_zone/1)
   end
