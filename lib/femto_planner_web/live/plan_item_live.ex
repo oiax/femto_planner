@@ -22,6 +22,7 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     socket =
       socket
       |> assign(:plan_items, Schedule.list_plan_items())
+      |> assign(:continued_plan_items, [])
       |> assign(:id_of_plan_item_to_be_deleted, nil)
 
     {:noreply, socket}
@@ -32,6 +33,10 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     socket =
       socket
       |> assign(:plan_items, Schedule.list_plan_items_of_today())
+      |> assign(
+        :continued_plan_items,
+        Schedule.list_continued_plan_items()
+      )
       |> assign(:id_of_plan_item_to_be_deleted, nil)
 
     {:noreply, socket}

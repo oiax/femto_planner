@@ -67,3 +67,10 @@ insert!(%PlanItem{
   starts_at: shift(time0, day: -1, hour: 10),
   ends_at: shift(time0, hour: 17)
 })
+
+insert!(%PlanItem{
+  name: "Bargain sale",
+  description: "",
+  starts_at: shift(time0, day: -3, hour: 12),
+  ends_at: shift(time0, day: 4, hour: 12)
+})
