@@ -90,7 +90,7 @@ defmodule FemtoPlannerWeb.Shared do
         />
         <select
           name={@hour_field.name}
-          class="select select-bordered border-gray-500"
+          class="select select-bordered border-gray-500 ml-1"
         >
           <%= Phoenix.HTML.Form.options_for_select(
             Enum.map(0..23, &{two_digits(&1), &1}),
@@ -99,7 +99,7 @@ defmodule FemtoPlannerWeb.Shared do
         </select>
         <select
           name={@minute_field.name}
-          class="select select-bordered border-gray-500"
+          class="select select-bordered border-gray-500 ml-1"
         >
           <%= Phoenix.HTML.Form.options_for_select(
             Enum.map(0..55//5, &{two_digits(&1), &1}),
