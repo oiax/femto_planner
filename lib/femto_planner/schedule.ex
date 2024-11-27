@@ -1,5 +1,5 @@
 defmodule FemtoPlanner.Schedule do
-  import Ecto.Query, only: [from: 2]
+  import Ecto.Query, only: [from: 1, from: 2, order_by: 3]
   alias FemtoPlanner.Repo
   alias FemtoPlanner.Schedule.PlanItem
 
@@ -10,11 +10,8 @@ defmodule FemtoPlanner.Schedule do
   end
 
   def list_plan_items do
-    from(pi in PlanItem,
-      order_by: [asc: pi.starts_at]
-    )
-    |> Repo.all()
-    |> Enum.map(&convert_time_zone/1)
+    from(pi in PlanItem)
+    |> do_list_plan_items()
   end
 
   def list_plan_items_of_today do
@@ -22,9 +19,14 @@ defmodule FemtoPlanner.Schedule do
     t1 = DateTime.add(t0, 1, :day)
 
     from(pi in PlanItem,
-      order_by: [asc: pi.starts_at],
       where: pi.starts_at >= ^t0 and pi.starts_at < ^t1
     )
+    |> do_list_plan_items()
+  end
+
+  defp do_list_plan_items(query) do
+    query
+    |> order_by([pi], [asc: pi.starts_at])
     |> Repo.all()
     |> Enum.map(&convert_time_zone/1)
   end
