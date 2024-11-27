@@ -227,38 +227,34 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     """
   end
 
-  defp link_to_index(%{live_action: :index} = assigns) do
+  defp nav_tab(%{link: "index", live_action: :index} = assigns) do
     ~H"""
     <button type="button" class={active_tab_class()}>
-      <Shared.icon name="list" />
-      Schedule
+      <Shared.icon name="list" /> Schedule
     </button>
     """
   end
 
-  defp link_to_index(assigns) do
+  defp nav_tab(%{link: "index"} = assigns) do
     ~H"""
     <.link patch={~p(/plan_items)} class={tab_class()}>
-      <Shared.icon name="list" />
-      Schedule
+      <Shared.icon name="list" /> Schedule
     </.link>
     """
   end
 
-  defp link_to_today(%{live_action: :today} = assigns) do
+  defp nav_tab(%{link: "today", live_action: :today} = assigns) do
     ~H"""
     <button type="button" class={active_tab_class()}>
-      <Shared.icon name="list" />
-      Today's Schedule
+      <Shared.icon name="list" /> Today's Schedule
     </button>
     """
   end
 
-  defp link_to_today(assigns) do
+  defp nav_tab(%{link: "today"} = assigns) do
     ~H"""
     <.link patch={~p(/plan_items/today)} class={tab_class()}>
-      <Shared.icon name="list" />
-      Today's Schedule
+      <Shared.icon name="list" /> Today's Schedule
     </.link>
     """
   end
