@@ -7,6 +7,7 @@ defmodule FemtoPlannerWeb.PlanItemLive do
   embed_templates "plan_item_live/*"
 
   def render(%{live_action: :index} = assigns), do: index(assigns)
+  def render(%{live_action: :today} = assigns), do: index(assigns)
   def render(%{live_action: :new} = assigns), do: new(assigns)
   def render(%{live_action: :show} = assigns), do: show(assigns)
   def render(%{live_action: :edit} = assigns), do: edit(assigns)
@@ -21,6 +22,16 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     socket =
       socket
       |> assign(:plan_items, Schedule.list_plan_items())
+      |> assign(:id_of_plan_item_to_be_deleted, nil)
+
+    {:noreply, socket}
+  end
+
+  def handle_params(_params, _uri, socket)
+      when socket.assigns.live_action == :today do
+    socket =
+      socket
+      |> assign(:plan_items, Schedule.list_plan_items_of_today())
       |> assign(:id_of_plan_item_to_be_deleted, nil)
 
     {:noreply, socket}

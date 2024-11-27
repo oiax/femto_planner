@@ -5,13 +5,25 @@ defmodule FemtoPlanner.Schedule do
 
   @time_zone Application.compile_env(:femto_planner, :default_time_zone)
 
-  def this_year do
-    DateTime.shift_zone!(DateTime.utc_now(), @time_zone).year
+  def current_time do
+    DateTime.shift_zone!(DateTime.utc_now(:second), @time_zone)
   end
 
   def list_plan_items do
     from(pi in PlanItem,
       order_by: [asc: pi.starts_at]
+    )
+    |> Repo.all()
+    |> Enum.map(&convert_time_zone/1)
+  end
+
+  def list_plan_items_of_today do
+    t0 = %{current_time() | hour: 0, minute: 0, second: 0}
+    t1 = DateTime.add(t0, 1, :day)
+
+    from(pi in PlanItem,
+      order_by: [asc: pi.starts_at],
+      where: pi.starts_at >= ^t0 and pi.starts_at < ^t1
     )
     |> Repo.all()
     |> Enum.map(&convert_time_zone/1)
