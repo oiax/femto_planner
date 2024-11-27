@@ -11,6 +11,11 @@ defmodule FemtoPlannerWeb.PlanItemLive do
   def render(%{live_action: :show} = assigns), do: show(assigns)
   def render(%{live_action: :edit} = assigns), do: edit(assigns)
 
+  def mount(_params, _session, socket) do
+    socket = assign(socket, :page_title, "Schedule")
+    {:ok, socket}
+  end
+
   def handle_params(_params, _uri, socket)
       when socket.assigns.live_action == :index do
     socket =
