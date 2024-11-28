@@ -71,6 +71,17 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     {:noreply, socket}
   end
 
+  def handle_event("change", %{"plan_item" => attrs}, socket) do
+    socket =
+      assign(
+        socket,
+        :changeset,
+        Schedule.change_plan_item(socket.assigns.changeset.data, attrs)
+      )
+
+    {:noreply, socket}
+  end
+
   def handle_event("create", %{"plan_item" => attrs}, socket) do
     case Schedule.create_plan_item(attrs) do
       {:ok, plan_item} ->

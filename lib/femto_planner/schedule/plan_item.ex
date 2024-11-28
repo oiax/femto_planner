@@ -23,6 +23,7 @@ defmodule FemtoPlanner.Schedule.PlanItem do
 
   @required_fields [
     :name,
+    :all_day,
     :s_date,
     :s_hour,
     :s_minute,

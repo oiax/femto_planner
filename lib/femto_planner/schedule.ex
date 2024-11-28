@@ -72,11 +72,11 @@ defmodule FemtoPlanner.Schedule do
     |> PlanItem.changeset(%{})
   end
 
-  def change_plan_item(plan_item) do
+  def change_plan_item(plan_item, attrs \\ %{}) do
     plan_item
     |> populate_virtual_fields()
     |> populate_dates()
-    |> PlanItem.changeset(%{})
+    |> PlanItem.changeset(attrs)
   end
 
   def create_plan_item(attrs) do

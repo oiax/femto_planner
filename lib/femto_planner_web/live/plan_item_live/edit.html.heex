@@ -1,4 +1,4 @@
-<.form :let={f} for={@changeset} phx-submit="update">
+<.form :let={f} for={@changeset} phx-change="change" phx-submit="update">
   <.fields f={f} />
   <div class="flex justify-end p-4">
     <.link

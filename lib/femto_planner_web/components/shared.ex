@@ -55,7 +55,7 @@ defmodule FemtoPlannerWeb.Shared do
   attr :optional, :boolean
 
   def textarea(assigns) do
-    assigns = Map.put_new(assigns, :optional, false)
+    assigns = assign_new(assigns, :optional, fn -> false end)
 
     ~H"""
     <div class="form-control p-4">
@@ -148,6 +148,16 @@ defmodule FemtoPlannerWeb.Shared do
   attr :label, :string, required: true
 
   def checkbox(assigns) do
+    assigns =
+      assign(
+        assigns,
+        :checked,
+        Phoenix.HTML.Form.normalize_value(
+          "checkbox",
+          assigns.field.value
+        )
+      )
+
     ~H"""
     <div class="form-control p-4">
       <label class="flex items-center gap-2 font-bold">
@@ -157,7 +167,7 @@ defmodule FemtoPlannerWeb.Shared do
           id={@field.id}
           name={@field.name}
           value="true"
-          checked={@field.value}
+          checked={@checked}
           class="rounded border-gray-500 text-gray-950 focus:ring-0"
         />
         <%= @label %>
