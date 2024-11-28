@@ -62,7 +62,9 @@ defmodule FemtoPlanner.Schedule do
     new_plan_item =
       %PlanItem{
         starts_at: DateTime.add(beginning_of_hour, 1, :hour),
-        ends_at: DateTime.add(beginning_of_hour, 2, :hour)
+        ends_at: DateTime.add(beginning_of_hour, 2, :hour),
+        starts_on: DateTime.to_date(current_time),
+        ends_on: DateTime.to_date(current_time)
       }
 
     new_plan_item
