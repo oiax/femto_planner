@@ -74,3 +74,23 @@ insert!(%PlanItem{
   starts_at: shift(time0, day: -3, hour: 12),
   ends_at: shift(time0, day: 4, hour: 12)
 })
+
+insert!(%PlanItem{
+  name: "My birthday",
+  description: "",
+  all_day: true,
+  starts_at: shift(time0, day: 7),
+  ends_at: shift(time0, day: 8),
+  starts_on: Date.add(today, 7),
+  ends_on: Date.add(today, 7)
+})
+
+insert!(%PlanItem{
+  name: "Workshops",
+  description: "Somewhere in Tokyo",
+  all_day: true,
+  starts_at: shift(time0, day: 14),
+  ends_at: shift(time0, day: 17),
+  starts_on: Date.add(today, 14),
+  ends_on: Date.add(today, 16)
+})
