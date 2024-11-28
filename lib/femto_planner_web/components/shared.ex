@@ -74,6 +74,33 @@ defmodule FemtoPlannerWeb.Shared do
     """
   end
 
+  attr :field, Phoenix.HTML.FormField, required: true
+  attr :label, :string, required: true
+
+  def date_input(assigns) do
+    ~H"""
+    <div class="form-control p-4">
+      <div>
+        <label for={@field.id} class="font-bold"><%= @label %></label>
+      </div>
+      <div>
+        <input
+          type="date"
+          id={@field.id}
+          name={@field.name}
+          value={@field.value}
+          class="input input-bordered border-gray-500"
+        />
+      </div>
+    </div>
+    """
+  end
+
+  attr :date_field, Phoenix.HTML.FormField, required: true
+  attr :hour_field, Phoenix.HTML.FormField, required: true
+  attr :minute_field, Phoenix.HTML.FormField, required: true
+  attr :label, :string, required: true
+
   def date_and_time_input(assigns) do
     ~H"""
     <div class="form-control p-4">
@@ -115,5 +142,27 @@ defmodule FemtoPlannerWeb.Shared do
     n
     |> Integer.to_string()
     |> String.pad_leading(2, "0")
+  end
+
+  attr :field, Phoenix.HTML.FormField, required: true
+  attr :label, :string, required: true
+
+  def checkbox(assigns) do
+    ~H"""
+    <div class="form-control p-4">
+      <label class="flex items-center gap-2 font-bold">
+        <input type="hidden" name={@field.name} value="false" />
+        <input
+          type="checkbox"
+          id={@field.id}
+          name={@field.name}
+          value="true"
+          checked={@field.value}
+          class="rounded border-gray-500 text-gray-950 focus:ring-0"
+        />
+        <%= @label %>
+      </label>
+    </div>
+    """
   end
 end
