@@ -71,8 +71,11 @@ insert!(%PlanItem{
 insert!(%PlanItem{
   name: "Bargain sale",
   description: "",
-  starts_at: shift(time0, day: -3, hour: 12),
-  ends_at: shift(time0, day: 4, hour: 12)
+  all_day: true,
+  starts_at: shift(time0, day: -3),
+  ends_at: shift(time0, day: 4),
+  starts_on: Date.add(today, -3),
+  ends_on: Date.add(today, 3)
 })
 
 insert!(%PlanItem{
