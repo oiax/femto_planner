@@ -115,9 +115,20 @@ defmodule FemtoPlanner.Schedule do
   end
 
   defp populate_dates(item) do
+    ends_on =
+      case item.ends_at do
+        %DateTime{hour: 0, minute: 0} ->
+          item.ends_at
+          |> DateTime.to_date()
+          |> Date.add(-1)
+
+        _ ->
+          DateTime.to_date(item.ends_at)
+      end
+
     Map.merge(item, %{
       starts_on: DateTime.to_date(item.starts_at),
-      ends_on: DateTime.to_date(item.ends_at)
+      ends_on: ends_on
     })
   end
 
