@@ -38,7 +38,11 @@ defmodule FemtoPlanner.Schedule do
 
   defp do_list_plan_items(query) do
     query
-    |> order_by([pi], asc: pi.starts_at)
+    |> order_by([pi],
+      asc: pi.starts_at,
+      desc: pi.all_day,
+      asc: pi.ends_at
+    )
     |> Repo.all()
     |> Enum.map(&convert_time_zone/1)
   end

@@ -186,6 +186,10 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     end
   end
 
+  defp format_date(date) do
+    Schedule.format_datetime(date, "%Y-%m-%d (%a)")
+  end
+
   defp field_name_class,
     do: "bg-base-content text-white py-1 px-2 md:text-right"
 
