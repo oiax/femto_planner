@@ -75,6 +75,7 @@ defmodule FemtoPlanner.Schedule do
   def change_plan_item(plan_item) do
     plan_item
     |> populate_virtual_fields()
+    |> populate_dates()
     |> PlanItem.changeset(%{})
   end
 
@@ -110,6 +111,13 @@ defmodule FemtoPlanner.Schedule do
       e_date: DateTime.to_date(item.ends_at),
       e_hour: item.ends_at.hour,
       e_minute: item.ends_at.minute
+    })
+  end
+
+  defp populate_dates(item) do
+    Map.merge(item, %{
+      starts_on: DateTime.to_date(item.starts_at),
+      ends_on: DateTime.to_date(item.ends_at)
     })
   end
 
