@@ -1,14 +1,24 @@
 <div class="p-4">
   <%= for item <- @plan_items do %>
     <div class="grid grid-cols-1 md:grid-cols-2 bg-base-300 m-2 p-2">
-      <.link
-        patch={~p(/plan_items/#{item.id})}
-        class="font-bold underline"
-      >
-        <%= item.name %>
-      </.link>
-      <div>
-        <.description item={item} />
+      <div class="flex justify-between">
+        <.link patch={~p(/plan_items/#{item.id})} class="font-bold">
+          <%= item.name %>
+        </.link>
+        <.link patch={~p(/plan_items/#{item.id}/edit)} class="md:hidden">
+          <Shared.icon name="edit" />
+        </.link>
+      </div>
+      <div class="flex justify-between">
+        <div>
+          <.description item={item} />
+        </div>
+        <.link
+          patch={~p(/plan_items/#{item.id}/edit)}
+          class="hidden md:block"
+        >
+          <Shared.icon name="edit" />
+        </.link>
       </div>
       <div class="col-span-1 md:col-span-2 text-sm">
         <.duration item={item} />
