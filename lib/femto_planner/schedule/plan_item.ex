@@ -9,7 +9,25 @@ defmodule FemtoPlanner.Schedule.PlanItem do
     field :ends_at, :utc_datetime
 
     timestamps(type: :utc_datetime_usec)
+
+    field :s_date, :date, virtual: true
+    field :s_hour, :integer, virtual: true
+    field :s_minute, :integer, virtual: true
+    field :e_date, :date, virtual: true
+    field :e_hour, :integer, virtual: true
+    field :e_minute, :integer, virtual: true
   end
+
+  @fields [
+    :name,
+    :description,
+    :s_date,
+    :s_hour,
+    :s_minute,
+    :e_date,
+    :e_hour,
+    :e_minute
+  ]
 
   @doc false
   def changeset(plan_item) do
@@ -20,6 +38,7 @@ defmodule FemtoPlanner.Schedule.PlanItem do
   def changeset(plan_item, attrs) do
     plan_item
     |> cast(attrs, [:name, :description, :starts_at, :ends_at])
+    |> cast(attrs, @fields)
     |> validate_required([])
   end
 
