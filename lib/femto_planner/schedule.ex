@@ -17,6 +17,18 @@ defmodule FemtoPlanner.Schedule do
     |> Enum.map(&convert_time_zone/1)
   end
 
+  def list_plan_items_of_today do
+    t0 = %{current_time() | hour: 0, minute: 0, second: 0}
+    t1 = DateTime.add(t0, 1, :day)
+
+    from(pi in PlanItem,
+      where: pi.starts_at >= ^t0 and pi.starts_at < ^t1,
+      order_by: [asc: pi.starts_at, asc: pi.ends_at]
+    )
+    |> Repo.all()
+    |> Enum.map(&convert_time_zone/1)
+  end
+
   def get_plan_item!(id) do
     PlanItem
     |> Repo.get!(id)

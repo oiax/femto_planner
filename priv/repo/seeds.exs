@@ -39,3 +39,38 @@ insert!(%PlanItem{
   starts_at: shift(time1, year: 1, day: -2),
   ends_at: shift(time1, year: 1, day: 3)
 })
+
+insert!(%PlanItem{
+  name: "Shopping",
+  description: "Buy cat food",
+  starts_at: shift(time0, day: 3, hour: 11),
+  ends_at: shift(time0, day: 3, hour: 11, minute: 30)
+})
+
+insert!(%PlanItem{
+  name: "Dentist",
+  description: "",
+  starts_at: shift(time0, day: 10, hour: 15),
+  ends_at: shift(time0, day: 10, hour: 16)
+})
+
+insert!(%PlanItem{
+  name: "Astronomical observation",
+  description: "",
+  starts_at: shift(time0, hour: 23),
+  ends_at: shift(time0, hour: 25)
+})
+
+insert!(%PlanItem{
+  name: "Daughter's business trip",
+  description: "Kyoto",
+  starts_at: shift(time0, day: -1, hour: 10),
+  ends_at: shift(time0, hour: 17)
+})
+
+insert!(%PlanItem{
+  name: "Bargain sale",
+  description: "",
+  starts_at: shift(time0, day: -3, hour: 12),
+  ends_at: shift(time0, day: 4, hour: 12)
+})
