@@ -19,7 +19,19 @@ defmodule FemtoPlanner.Schedule do
     t1 = DateTime.add(t0, 1, :day)
 
     from(pi in PlanItem,
-      where: pi.starts_at >= ^t0 and pi.starts_at < ^t1
+      where:
+        (pi.starts_at >= ^t0 and pi.starts_at < ^t1) or
+          (pi.ends_at >= ^t0 and pi.ends_at <= ^t1)
+    )
+    |> do_list_plan_items()
+  end
+
+  def list_continued_plan_items do
+    t0 = %{current_time() | hour: 0, minute: 0, second: 0}
+    t1 = DateTime.add(t0, 1, :day)
+
+    from(pi in PlanItem,
+      where: pi.starts_at < ^t0 and pi.ends_at > ^t1
     )
     |> do_list_plan_items()
   end

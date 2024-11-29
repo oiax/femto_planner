@@ -1,48 +1,24 @@
 <div class="p-4">
-  <nav class="flex justify-end">
-    <.link patch={~p(/plan_items/new)} class="md:btn md:btn-accent mr-2">
+  <nav class="flex justify-between mx-2">
+    <div class="tabs tabs-lifted md:tabs-lg">
+      <.nav_tab link="index" {assigns} />
+      <.nav_tab link="today" {assigns} />
+    </div>
+    <.link patch={~p(/plan_items/new)} class="md:btn md:btn-accent">
       <Shared.icon name="add" />
       <span class="hidden md:inline">Add a schedule item</span>
     </.link>
   </nav>
 
   <%= for item <- @plan_items do %>
-    <div class="grid grid-cols-1 md:grid-cols-2 bg-base-300 m-2 p-2">
-      <%= if to_string(item.id) == @id_of_plan_item_to_be_deleted do %>
-        <div class="
-        md:col-span-2
-        bg-warning
-        rounded
-        rounde-lg
-        mb-4
-        p-2
-        flex
-        items-center
-      ">
-          <.deletion_confirmation item={item} />
-        </div>
-      <% end %>
-      <div class="flex justify-between">
-        <.link patch={~p(/plan_items/#{item.id})} class="font-bold">
-          <%= item.name %>
-        </.link>
-        <div class="md:hidden">
-          <.edit_icon plan_item={item} {assigns} />
-          <.delete_icon plan_item={item} {assigns} />
-        </div>
-      </div>
-      <div class="flex justify-between">
-        <div>
-          <.description item={item} />
-        </div>
-        <div class="hidden md:inline">
-          <.edit_icon plan_item={item} {assigns} />
-          <.delete_icon plan_item={item} {assigns} />
-        </div>
-      </div>
-      <div class="col-span-1 md:col-span-2 text-sm">
-        <.duration item={item} />
-      </div>
-    </div>
+    <.index_row item={item} {assigns} />
+  <% end %>
+
+  <%= if @continued_plan_items != [] do %>
+    <hr class="my-4 mx-2 border-gray-500" />
+
+    <%= for item <- @continued_plan_items do %>
+      <.index_row item={item} {assigns} />
+    <% end %>
   <% end %>
 </div>

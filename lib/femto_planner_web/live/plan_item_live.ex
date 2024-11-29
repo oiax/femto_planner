@@ -22,6 +22,7 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     socket =
       socket
       |> assign(:plan_items, Schedule.list_plan_items())
+      |> assign(:continued_plan_items, [])
       |> assign(:id_of_plan_item_to_be_deleted, nil)
 
     {:noreply, socket}
@@ -32,6 +33,10 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     socket =
       socket
       |> assign(:plan_items, Schedule.list_plan_items_of_today())
+      |> assign(
+        :continued_plan_items,
+        Schedule.list_continued_plan_items()
+      )
       |> assign(:id_of_plan_item_to_be_deleted, nil)
 
     {:noreply, socket}
@@ -220,5 +225,45 @@ defmodule FemtoPlannerWeb.PlanItemLive do
       <span class="hidden md:inline">Delete</span>
     </button>
     """
+  end
+
+  defp nav_tab(%{link: "index", live_action: :index} = assigns) do
+    ~H"""
+    <button type="button" class={active_tab_class()}>
+      <Shared.icon name="list" /> Schedule
+    </button>
+    """
+  end
+
+  defp nav_tab(%{link: "index"} = assigns) do
+    ~H"""
+    <.link patch={~p(/plan_items)} class={tab_class()}>
+      <Shared.icon name="list" /> Schedule
+    </.link>
+    """
+  end
+
+  defp nav_tab(%{link: "today", live_action: :today} = assigns) do
+    ~H"""
+    <button type="button" class={active_tab_class()}>
+      <Shared.icon name="list" /> Today's Schedule
+    </button>
+    """
+  end
+
+  defp nav_tab(%{link: "today"} = assigns) do
+    ~H"""
+    <.link patch={~p(/plan_items/today)} class={tab_class()}>
+      <Shared.icon name="list" /> Today's Schedule
+    </.link>
+    """
+  end
+
+  defp active_tab_class do
+    tab_class() <> " tab-active cursor-default"
+  end
+
+  def tab_class do
+    "tab [--tab-border-color:#6b7280]"
   end
 end
