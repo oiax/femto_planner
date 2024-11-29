@@ -82,7 +82,7 @@ defmodule FemtoPlannerWeb.Shared do
           class="select select-bordered border-gray-500 ml-1"
         >
           <%= Phoenix.HTML.Form.options_for_select(
-            0..23,
+            Enum.map(0..23, &{two_digits(&1), &1}),
             @hour_field.value
           ) %>
         </select>
@@ -91,12 +91,18 @@ defmodule FemtoPlannerWeb.Shared do
           class="select select-bordered border-gray-500 ml-1"
         >
           <%= Phoenix.HTML.Form.options_for_select(
-            0..55//5,
+            Enum.map(0..55//5, &{two_digits(&1), &1}),
             @minute_field.value
           ) %>
         </select>
       </div>
     </div>
     """
+  end
+
+  defp two_digits(n) do
+    n
+    |> Integer.to_string()
+    |> String.pad_leading(2, "0")
   end
 end

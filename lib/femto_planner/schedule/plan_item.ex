@@ -41,6 +41,29 @@ defmodule FemtoPlanner.Schedule.PlanItem do
     plan_item
     |> cast(attrs, @fields)
     |> validate_required([])
+    |> change_starts_at()
+    |> change_ends_at()
+  end
+
+  defp change_starts_at(changeset) do
+    d = get_field(changeset, :s_date)
+    h = get_field(changeset, :s_hour)
+    m = get_field(changeset, :s_minute)
+    put_change(changeset, :starts_at, get_utc_datetime(d, h, m))
+  end
+
+  defp change_ends_at(changeset) do
+    d = get_field(changeset, :e_date)
+    h = get_field(changeset, :e_hour)
+    m = get_field(changeset, :e_minute)
+    put_change(changeset, :ends_at, get_utc_datetime(d, h, m))
+  end
+
+  @time_zone Application.compile_env(:femto_planner, :default_time_zone)
+
+  defp get_utc_datetime(d, h, m) do
+    dt = DateTime.new!(d, Time.new!(h, m, 0), @time_zone)
+    DateTime.shift_zone!(dt, "Etc/UTC")
   end
 
   @doc false
