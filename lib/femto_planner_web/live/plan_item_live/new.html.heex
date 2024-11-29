@@ -1,16 +1,5 @@
 <.form :let={f} for={@changeset}>
-  <div class="form-control p-4">
-    <div>
-      <label for={f[:name].id} class="font-bold">Name</label>
-    </div>
-    <input
-      type="text"
-      id={f[:name].id}
-      name={f[:name].name}
-      value={f[:name].value}
-      class="input input-bordered border-gray-500"
-    />
-  </div>
+  <Shared.text_input field={f[:name]} label="Name" />
   <div class="form-control p-4">
     <div>
       <label for={f[:description].id} class="font-bold">
@@ -24,34 +13,8 @@
     ><%= f[:description].value %></textarea>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2">
-    <div class="form-control p-4">
-      <div>
-        <label for={f[:starts_at].id} class="font-bold">
-          Start date and time
-        </label>
-      </div>
-      <input
-        type="text"
-        id={f[:starts_at].id}
-        name={f[:starts_at].name}
-        value={f[:starts_at].value}
-        class="input input-bordered border-gray-500"
-      />
-    </div>
-    <div class="form-control p-4">
-      <div>
-        <label for={f[:ends_at].id} class="font-bold">
-          End date and time
-        </label>
-      </div>
-      <input
-        type="text"
-        id={f[:ends_at].id}
-        name={f[:ends_at].name}
-        value={f[:ends_at].value}
-        class="input input-bordered border-gray-500"
-      />
-    </div>
+    <Shared.text_input field={f[:starts_at]} label="Start date and time" />
+    <Shared.text_input field={f[:ends_at]} label="Start date and time" />
   </div>
   <div class="flex justify-end p-4">
     <button type="button" class="btn btn-accent">
