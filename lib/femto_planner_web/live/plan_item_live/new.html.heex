@@ -11,6 +11,18 @@
       class="input input-bordered border-gray-500"
     />
   </div>
+  <div class="form-control p-4">
+    <div>
+      <label for={f[:description].id} class="font-bold">
+        Description
+      </label>
+      <small>(Optional)</small>
+    </div>
+    <textarea
+      id={f[:description].id}
+      class="textarea textarea-bordered border-gray-500"
+    ><%= f[:description].value %></textarea>
+  </div>
   <div class="flex justify-end p-4">
     <button type="button" class="btn btn-accent">
       Create
