@@ -27,10 +27,20 @@ defmodule FemtoPlanner.Schedule do
     PlanItem.build()
   end
 
+  def change_plan_item(plan_item) do
+    PlanItem.changeset(plan_item)
+  end
+
   def create_plan_item(attrs) do
     %PlanItem{}
     |> PlanItem.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def update_plan_item(plan_item, attrs) do
+    plan_item
+    |> PlanItem.changeset(attrs)
+    |> Repo.update()
   end
 
   defp convert_time_zone(item) do

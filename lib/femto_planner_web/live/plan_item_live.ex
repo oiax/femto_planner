@@ -9,6 +9,7 @@ defmodule FemtoPlannerWeb.PlanItemLive do
   def render(%{live_action: :index} = assigns), do: index(assigns)
   def render(%{live_action: :new} = assigns), do: new(assigns)
   def render(%{live_action: :show} = assigns), do: show(assigns)
+  def render(%{live_action: :edit} = assigns), do: edit(assigns)
 
   def handle_params(_params, _uri, socket)
       when socket.assigns.live_action == :index do
@@ -28,8 +29,33 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     {:noreply, socket}
   end
 
+  def handle_params(%{"id" => id}, _uri, socket)
+      when socket.assigns.live_action == :edit do
+    plan_item = Schedule.get_plan_item!(id)
+    changeset = Schedule.change_plan_item(plan_item)
+
+    socket =
+      socket
+      |> assign(:plan_item, plan_item)
+      |> assign(:changeset, changeset)
+
+    {:noreply, socket}
+  end
+
   def handle_event("create", %{"plan_item" => attrs}, socket) do
     case Schedule.create_plan_item(attrs) do
+      {:ok, plan_item} ->
+        socket = push_patch(socket, to: ~p(/plan_items/#{plan_item.id}))
+        {:noreply, socket}
+
+      {:error, changeset} ->
+        socket = assign(socket, :changeset, changeset)
+        {:noreply, socket}
+    end
+  end
+
+  def handle_event("update", %{"plan_item" => attrs}, socket) do
+    case Schedule.update_plan_item(socket.assigns.changeset.data, attrs) do
       {:ok, plan_item} ->
         socket = push_patch(socket, to: ~p(/plan_items/#{plan_item.id}))
         {:noreply, socket}

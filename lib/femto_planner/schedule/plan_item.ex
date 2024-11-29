@@ -12,12 +12,18 @@ defmodule FemtoPlanner.Schedule.PlanItem do
   end
 
   @doc false
+  def changeset(plan_item) do
+    cast(plan_item, %{}, [])
+  end
+
+  @doc false
   def changeset(plan_item, attrs) do
     plan_item
     |> cast(attrs, [:name, :description, :starts_at, :ends_at])
     |> validate_required([])
   end
 
+  @doc false
   def build do
     current_time = FemtoPlanner.Schedule.current_time()
     beginning_of_hour = %{current_time | minute: 0, second: 0}
