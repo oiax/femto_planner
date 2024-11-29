@@ -7,8 +7,8 @@ defmodule FemtoPlannerWeb.PlanItemLive do
   embed_templates "plan_item_live/*"
 
   def render(%{live_action: :index} = assigns), do: index(assigns)
-  def render(%{live_action: :item} = assigns), do: show(assigns)
   def render(%{live_action: :new} = assigns), do: new(assigns)
+  def render(%{live_action: :show} = assigns), do: show(assigns)
 
   def handle_params(_params, _uri, socket)
       when socket.assigns.live_action == :index do
@@ -22,7 +22,7 @@ defmodule FemtoPlannerWeb.PlanItemLive do
   end
 
   def handle_params(%{"id" => id}, _uri, socket)
-      when socket.assigns.live_action == :item do
+      when socket.assigns.live_action == :show do
     socket = assign(socket, :plan_item, Schedule.get_plan_item!(id))
     {:noreply, socket}
   end
