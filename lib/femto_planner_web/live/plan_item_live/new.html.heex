@@ -23,6 +23,36 @@
       class="textarea textarea-bordered border-gray-500"
     ><%= f[:description].value %></textarea>
   </div>
+  <div class="grid grid-cols-1 md:grid-cols-2">
+    <div class="form-control p-4">
+      <div>
+        <label for={f[:starts_at].id} class="font-bold">
+          Start date and time
+        </label>
+      </div>
+      <input
+        type="text"
+        id={f[:starts_at].id}
+        name={f[:starts_at].name}
+        value={f[:starts_at].value}
+        class="input input-bordered border-gray-500"
+      />
+    </div>
+    <div class="form-control p-4">
+      <div>
+        <label for={f[:ends_at].id} class="font-bold">
+          End date and time
+        </label>
+      </div>
+      <input
+        type="text"
+        id={f[:ends_at].id}
+        name={f[:ends_at].name}
+        value={f[:ends_at].value}
+        class="input input-bordered border-gray-500"
+      />
+    </div>
+  </div>
   <div class="flex justify-end p-4">
     <button type="button" class="btn btn-accent">
       Create

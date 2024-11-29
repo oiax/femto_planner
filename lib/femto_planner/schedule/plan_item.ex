@@ -19,6 +19,12 @@ defmodule FemtoPlanner.Schedule.PlanItem do
   end
 
   def build do
-    cast(%__MODULE__{}, %{}, [])
+    current_time = FemtoPlanner.Schedule.current_time()
+    beginning_of_hour = %{current_time | minute: 0, second: 0}
+
+    %__MODULE__{}
+    |> cast(%{}, [])
+    |> put_change(:starts_at, DateTime.add(beginning_of_hour, 1, :hour))
+    |> put_change(:ends_at, DateTime.add(beginning_of_hour, 2, :hour))
   end
 end

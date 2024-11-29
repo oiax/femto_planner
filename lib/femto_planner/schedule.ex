@@ -5,6 +5,10 @@ defmodule FemtoPlanner.Schedule do
 
   @time_zone Application.compile_env(:femto_planner, :default_time_zone)
 
+  def current_time do
+    DateTime.shift_zone!(DateTime.utc_now(:second), @time_zone)
+  end
+
   def list_plan_items do
     from(pi in PlanItem,
       order_by: [asc: pi.starts_at]
