@@ -1,15 +1,7 @@
 <nav class="flex justify-end md:mb-2">
-  <.link patch={~p(/plan_items)} class="md:btn md:btn-neutral">
-    <Shared.icon name="menu" />
-    <span class="hidden md:inline">予定表へ戻る</span>
-  </.link>
-  <.link
-    patch={~p(/plan_items/#{@plan_item.id}/edit)}
-    class="md:btn md:btn-primary ml-2"
-  >
-    <Shared.icon name="edit" />
-    <span class="hidden md:inline">Edit</span>
-  </.link>
+  <.back_button {assigns} />
+  <.edit_button {assigns} />
+  <.delete_button {assigns} />
 </nav>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-1">
   <div class={field_name_class()}>件名</div>
