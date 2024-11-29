@@ -43,6 +43,12 @@ defmodule FemtoPlanner.Schedule do
     |> Repo.update()
   end
 
+  def delete_plan_item(id) do
+    PlanItem
+    |> Repo.get!(id)
+    |> Repo.delete!()
+  end
+
   defp convert_time_zone(item) do
     s = DateTime.shift_zone!(item.starts_at, @time_zone)
     e = DateTime.shift_zone!(item.ends_at, @time_zone)

@@ -66,6 +66,12 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     end
   end
 
+  def handle_event("delete", %{"id" => id}, socket) do
+    Schedule.delete_plan_item(id)
+    socket = push_patch(socket, to: ~p(/plan_items))
+    {:noreply, socket}
+  end
+
   defp description(%{item: item}) do
     assigns = %{
       lines: String.split(item.description, "\n")
