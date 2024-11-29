@@ -11,7 +11,9 @@ defmodule FemtoPlanner.Application do
       FemtoPlannerWeb.Telemetry,
       FemtoPlanner.Repo,
       {DNSCluster,
-       query: Application.get_env(:femto_planner, :dns_cluster_query) || :ignore},
+       query:
+         Application.get_env(:femto_planner, :dns_cluster_query) ||
+           :ignore},
       {Phoenix.PubSub, name: FemtoPlanner.PubSub},
       # Start a worker by calling: FemtoPlanner.Worker.start_link(arg)
       # {FemtoPlanner.Worker, arg},

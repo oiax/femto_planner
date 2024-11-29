@@ -13,7 +13,10 @@
     ><%= f[:description].value %></textarea>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2">
-    <Shared.text_input field={f[:starts_at]} label="Start date and time" />
+    <Shared.text_input
+      field={f[:starts_at]}
+      label="Start date and time"
+    />
     <Shared.text_input field={f[:ends_at]} label="Start date and time" />
   </div>
   <div class="flex justify-end p-4">

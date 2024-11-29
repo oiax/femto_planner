@@ -8,7 +8,9 @@
   <div class={field_name_class()}>件名</div>
   <div class={field_value_class()}><%= @plan_item.name %></div>
   <div class={field_name_class()}>説明</div>
-  <div class={field_value_class()}><.description item={@plan_item} /></div>
+  <div class={field_value_class()}>
+    <.description item={@plan_item} />
+  </div>
   <div class={field_name_class()}>開始時刻</div>
   <div class={field_value_class()}>
     <%= format_datetime(@plan_item.starts_at) %>
