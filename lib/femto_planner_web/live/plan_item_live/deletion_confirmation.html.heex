@@ -1,0 +1,17 @@
+<Shared.icon name="warning" />
+<span class="ml-2">Are you sure you want to delete this item?</span>
+<button
+  type="button"
+  phx-click="do_delete"
+  phx-value-id={@item.id}
+  class="btn btn-sm btn-neutral ml-4"
+>
+  Yes
+</button>
+<button
+  type="button"
+  phx-click="cancel"
+  class="btn btn-sm btn-neutral ml-2"
+>
+  No
+</button>

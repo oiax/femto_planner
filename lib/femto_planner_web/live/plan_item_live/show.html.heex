@@ -3,6 +3,11 @@
   <.edit_button {assigns} />
   <.delete_button {assigns} />
 </nav>
+<%= if to_string(@plan_item.id) == @id_of_plan_item_to_be_deleted do %>
+  <div class="bg-warning rounded rounde-lg mb-2 p-2 flex items-center">
+    <.deletion_confirmation item={@plan_item} />
+  </div>
+<% end %>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-1">
   <div class={field_name_class()}>件名</div>
   <div class={field_value_class()}><%= @plan_item.name %></div>

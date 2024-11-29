@@ -8,6 +8,20 @@
 
   <%= for item <- @plan_items do %>
     <div class="grid grid-cols-1 md:grid-cols-2 bg-base-300 m-2 p-2">
+      <%= if to_string(item.id) == @id_of_plan_item_to_be_deleted do %>
+        <div class="
+        md:col-span-2
+        bg-warning
+        rounded
+        rounde-lg
+        mb-4
+        p-2
+        flex
+        items-center
+      ">
+          <.deletion_confirmation item={item} />
+        </div>
+      <% end %>
       <div class="flex justify-between">
         <.link patch={~p(/plan_items/#{item.id})} class="font-bold">
           <%= item.name %>
