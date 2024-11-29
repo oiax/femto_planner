@@ -62,9 +62,7 @@ defmodule FemtoPlanner.Schedule do
     new_plan_item =
       %PlanItem{
         starts_at: DateTime.add(beginning_of_hour, 1, :hour),
-        ends_at: DateTime.add(beginning_of_hour, 2, :hour),
-        starts_on: DateTime.to_date(current_time),
-        ends_on: DateTime.to_date(current_time)
+        ends_at: DateTime.add(beginning_of_hour, 2, :hour)
       }
 
     new_plan_item
@@ -75,7 +73,6 @@ defmodule FemtoPlanner.Schedule do
   def change_plan_item(plan_item, attrs \\ %{}) do
     plan_item
     |> populate_virtual_fields()
-    |> populate_dates()
     |> PlanItem.changeset(attrs)
   end
 
@@ -111,24 +108,6 @@ defmodule FemtoPlanner.Schedule do
       e_date: DateTime.to_date(item.ends_at),
       e_hour: item.ends_at.hour,
       e_minute: item.ends_at.minute
-    })
-  end
-
-  defp populate_dates(item) do
-    ends_on =
-      case item.ends_at do
-        %DateTime{hour: 0, minute: 0} ->
-          item.ends_at
-          |> DateTime.to_date()
-          |> Date.add(-1)
-
-        _ ->
-          DateTime.to_date(item.ends_at)
-      end
-
-    Map.merge(item, %{
-      starts_on: DateTime.to_date(item.starts_at),
-      ends_on: ends_on
     })
   end
 

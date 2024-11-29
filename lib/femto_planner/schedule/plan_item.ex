@@ -1,6 +1,7 @@
 defmodule FemtoPlanner.Schedule.PlanItem do
   use Ecto.Schema
   import Ecto.Changeset
+  require Logger
 
   schema "plan_items" do
     field :name, :string, default: ""
@@ -23,7 +24,12 @@ defmodule FemtoPlanner.Schedule.PlanItem do
 
   @required_fields [
     :name,
-    :all_day,
+    :all_day
+  ]
+
+  @optional_fields [:description]
+
+  @date_time_fields [
     :s_date,
     :s_hour,
     :s_minute,
@@ -32,15 +38,38 @@ defmodule FemtoPlanner.Schedule.PlanItem do
     :e_minute
   ]
 
-  @optional_fields [:description]
+  @date_fields [
+    :starts_on,
+    :ends_on
+  ]
 
   @doc false
+  def changeset(plan_item, %{"all_day" => "false"} = attrs) do
+    plan_item
+    |> cast(
+      attrs,
+      @required_fields ++ @optional_fields ++ @date_time_fields
+    )
+    |> validate_required(@required_fields)
+    |> change_starts_at()
+    |> change_ends_at()
+    |> put_change(:starts_on, nil)
+    |> put_change(:ends_on, nil)
+  end
+
+  def changeset(plan_item, %{"all_day" => "true"} = attrs) do
+    plan_item
+    |> cast(attrs, @required_fields ++ @optional_fields ++ @date_fields)
+    |> validate_required(@required_fields)
+    |> populate_starts_on()
+    |> populate_ends_on()
+    |> change_time_boundaries()
+  end
+
   def changeset(plan_item, attrs) do
     plan_item
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
-    |> change_starts_at()
-    |> change_ends_at()
   end
 
   defp change_starts_at(changeset) do
@@ -62,5 +91,54 @@ defmodule FemtoPlanner.Schedule.PlanItem do
   defp get_utc_datetime(d, h, m) do
     dt = DateTime.new!(d, Time.new!(h, m, 0), @time_zone)
     DateTime.shift_zone!(dt, "Etc/UTC")
+  end
+
+  defp populate_starts_on(changeset) do
+    if get_field(changeset, :starts_on) do
+      changeset
+    else
+      starts_at = get_field(changeset, :starts_at)
+      put_change(changeset, :starts_on, DateTime.to_date(starts_at))
+    end
+  end
+
+  defp populate_ends_on(changeset) do
+    if get_field(changeset, :ends_on) do
+      changeset
+    else
+      ends_at = get_field(changeset, :ends_at)
+
+      ends_on =
+        case ends_at do
+          %DateTime{hour: 0, minute: 0} ->
+            ends_at
+            |> DateTime.to_date()
+            |> Date.add(-1)
+
+          _ ->
+            DateTime.to_date(ends_at)
+        end
+
+      put_change(changeset, :ends_on, ends_on)
+    end
+  end
+
+  defp change_time_boundaries(changeset) do
+    s =
+      changeset
+      |> get_field(:starts_on)
+      |> DateTime.new!(Time.new!(0, 0, 0), @time_zone)
+      |> DateTime.shift_zone!("Etc/UTC")
+
+    e =
+      changeset
+      |> get_field(:ends_on)
+      |> DateTime.new!(Time.new!(0, 0, 0), @time_zone)
+      |> DateTime.shift_zone!("Etc/UTC")
+      |> DateTime.add(-1, :day)
+
+    changeset
+    |> put_change(:starts_at, s)
+    |> put_change(:ends_at, e)
   end
 end
