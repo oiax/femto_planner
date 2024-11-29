@@ -30,6 +30,18 @@ defmodule FemtoPlanner.Schedule.PlanItem do
   ]
 
   @doc false
+  def changeset do
+    current_time = FemtoPlanner.Schedule.current_time()
+    beginning_of_hour = %{current_time | minute: 0, second: 0}
+
+    %__MODULE__{}
+    |> cast(%{}, [])
+    |> put_change(:starts_at, DateTime.add(beginning_of_hour, 1, :hour))
+    |> put_change(:ends_at, DateTime.add(beginning_of_hour, 2, :hour))
+    |> change_virtual_fields()
+  end
+
+  @doc false
   def changeset(plan_item) do
     plan_item
     |> cast(%{}, [])
@@ -64,18 +76,6 @@ defmodule FemtoPlanner.Schedule.PlanItem do
   defp get_utc_datetime(d, h, m) do
     dt = DateTime.new!(d, Time.new!(h, m, 0), @time_zone)
     DateTime.shift_zone!(dt, "Etc/UTC")
-  end
-
-  @doc false
-  def build do
-    current_time = FemtoPlanner.Schedule.current_time()
-    beginning_of_hour = %{current_time | minute: 0, second: 0}
-
-    %__MODULE__{}
-    |> cast(%{}, [])
-    |> put_change(:starts_at, DateTime.add(beginning_of_hour, 1, :hour))
-    |> put_change(:ends_at, DateTime.add(beginning_of_hour, 2, :hour))
-    |> change_virtual_fields()
   end
 
   defp change_virtual_fields(changeset) do

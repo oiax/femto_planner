@@ -24,7 +24,7 @@ defmodule FemtoPlanner.Schedule do
   end
 
   def build_plan_item do
-    PlanItem.build()
+    PlanItem.changeset()
   end
 
   def change_plan_item(plan_item) do
