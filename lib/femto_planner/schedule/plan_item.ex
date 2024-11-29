@@ -31,13 +31,14 @@ defmodule FemtoPlanner.Schedule.PlanItem do
 
   @doc false
   def changeset(plan_item) do
-    cast(plan_item, %{}, [])
+    plan_item
+    |> cast(%{}, [])
+    |> change_virtual_fields()
   end
 
   @doc false
   def changeset(plan_item, attrs) do
     plan_item
-    |> cast(attrs, [:name, :description, :starts_at, :ends_at])
     |> cast(attrs, @fields)
     |> validate_required([])
   end
@@ -51,5 +52,19 @@ defmodule FemtoPlanner.Schedule.PlanItem do
     |> cast(%{}, [])
     |> put_change(:starts_at, DateTime.add(beginning_of_hour, 1, :hour))
     |> put_change(:ends_at, DateTime.add(beginning_of_hour, 2, :hour))
+    |> change_virtual_fields()
+  end
+
+  defp change_virtual_fields(changeset) do
+    starts_at = get_field(changeset, :starts_at)
+    ends_at = get_field(changeset, :ends_at)
+
+    changeset
+    |> put_change(:s_date, DateTime.to_date(starts_at))
+    |> put_change(:s_hour, starts_at.hour)
+    |> put_change(:s_minute, starts_at.minute)
+    |> put_change(:e_date, DateTime.to_date(ends_at))
+    |> put_change(:e_hour, ends_at.hour)
+    |> put_change(:e_minute, ends_at.minute)
   end
 end
