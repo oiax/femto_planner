@@ -17,4 +17,8 @@ defmodule FemtoPlanner.Schedule.PlanItem do
     |> cast(attrs, [])
     |> validate_required([])
   end
+
+  def build do
+    cast(%__MODULE__{}, %{}, [])
+  end
 end

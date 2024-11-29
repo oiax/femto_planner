@@ -18,6 +18,7 @@ defmodule FemtoPlannerWeb.PlanItemLive do
 
   def handle_params(_params, _uri, socket)
       when socket.assigns.live_action == :new do
+    socket = assign(socket, :changeset, Schedule.build_plan_item())
     {:noreply, socket}
   end
 

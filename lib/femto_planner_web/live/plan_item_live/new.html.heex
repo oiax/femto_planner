@@ -1,1 +1,19 @@
-New
+<.form :let={f} for={@changeset}>
+  <div class="form-control p-4">
+    <div>
+      <label for={f[:name].id} class="font-bold">Name</label>
+    </div>
+    <input
+      type="text"
+      id={f[:name].id}
+      name={f[:name].name}
+      value={f[:name].value}
+      class="input input-bordered border-gray-500"
+    />
+  </div>
+  <div class="flex justify-end p-4">
+    <button type="button" class="btn btn-accent">
+      Create
+    </button>
+  </div>
+</.form>

@@ -19,6 +19,10 @@ defmodule FemtoPlanner.Schedule do
     |> convert_time_zone()
   end
 
+  def build_plan_item do
+    PlanItem.build()
+  end
+
   defp convert_time_zone(item) do
     s = DateTime.shift_zone!(item.starts_at, @time_zone)
     e = DateTime.shift_zone!(item.ends_at, @time_zone)
