@@ -44,6 +44,25 @@ defmodule FemtoPlanner.Schedule.PlanItem do
   ]
 
   @doc false
+  def changeset do
+    current_time = FemtoPlanner.Schedule.current_time()
+    beginning_of_hour = %{current_time | minute: 0, second: 0}
+
+    %__MODULE__{}
+    |> cast(%{}, [])
+    |> put_change(:starts_at, DateTime.add(beginning_of_hour, 1, :hour))
+    |> put_change(:ends_at, DateTime.add(beginning_of_hour, 2, :hour))
+    |> change_virtual_fields()
+  end
+
+  @doc false
+  def changeset(plan_item) do
+    plan_item
+    |> cast(%{}, [])
+    |> change_virtual_fields()
+  end
+
+  @doc false
   def changeset(plan_item, %{"all_day" => "false"} = attrs) do
     plan_item
     |> cast(
@@ -61,8 +80,8 @@ defmodule FemtoPlanner.Schedule.PlanItem do
     plan_item
     |> cast(attrs, @required_fields ++ @optional_fields ++ @date_fields)
     |> validate_required(@required_fields)
-    |> populate_starts_on()
-    |> populate_ends_on()
+    |> change_starts_on()
+    |> change_ends_on()
     |> change_time_boundaries()
   end
 
@@ -93,7 +112,20 @@ defmodule FemtoPlanner.Schedule.PlanItem do
     DateTime.shift_zone!(dt, "Etc/UTC")
   end
 
-  defp populate_starts_on(changeset) do
+  defp change_virtual_fields(changeset) do
+    starts_at = get_field(changeset, :starts_at)
+    ends_at = get_field(changeset, :ends_at)
+
+    changeset
+    |> put_change(:s_date, DateTime.to_date(starts_at))
+    |> put_change(:s_hour, starts_at.hour)
+    |> put_change(:s_minute, starts_at.minute)
+    |> put_change(:e_date, DateTime.to_date(ends_at))
+    |> put_change(:e_hour, ends_at.hour)
+    |> put_change(:e_minute, ends_at.minute)
+  end
+
+  defp change_starts_on(changeset) do
     if get_field(changeset, :starts_on) do
       changeset
     else
@@ -102,7 +134,7 @@ defmodule FemtoPlanner.Schedule.PlanItem do
     end
   end
 
-  defp populate_ends_on(changeset) do
+  defp change_ends_on(changeset) do
     if get_field(changeset, :ends_on) do
       changeset
     else

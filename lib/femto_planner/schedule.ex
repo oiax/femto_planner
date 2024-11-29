@@ -54,26 +54,15 @@ defmodule FemtoPlanner.Schedule do
   end
 
   def build_plan_item do
-    current_time =
-      DateTime.shift_zone!(DateTime.utc_now(:second), @time_zone)
-
-    beginning_of_hour = %{current_time | minute: 0, second: 0}
-
-    new_plan_item =
-      %PlanItem{
-        starts_at: DateTime.add(beginning_of_hour, 1, :hour),
-        ends_at: DateTime.add(beginning_of_hour, 2, :hour)
-      }
-
-    new_plan_item
-    |> populate_virtual_fields()
-    |> PlanItem.changeset(%{})
+    PlanItem.changeset()
   end
 
-  def change_plan_item(plan_item, attrs \\ %{}) do
-    plan_item
-    |> populate_virtual_fields()
-    |> PlanItem.changeset(attrs)
+  def change_plan_item(plan_item) do
+    PlanItem.changeset(plan_item)
+  end
+
+  def change_plan_item(plan_item, attrs) do
+    PlanItem.changeset(plan_item, attrs)
   end
 
   def create_plan_item(attrs) do
@@ -98,17 +87,6 @@ defmodule FemtoPlanner.Schedule do
     s = DateTime.shift_zone!(item.starts_at, @time_zone)
     e = DateTime.shift_zone!(item.ends_at, @time_zone)
     %{item | starts_at: s, ends_at: e}
-  end
-
-  defp populate_virtual_fields(item) do
-    Map.merge(item, %{
-      s_date: DateTime.to_date(item.starts_at),
-      s_hour: item.starts_at.hour,
-      s_minute: item.starts_at.minute,
-      e_date: DateTime.to_date(item.ends_at),
-      e_hour: item.ends_at.hour,
-      e_minute: item.ends_at.minute
-    })
   end
 
   @abbreviated_day_of_week_names ~w(Mon Tue Wed Thu Fri Sat Sun)
