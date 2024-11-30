@@ -41,7 +41,7 @@ defmodule FemtoPlannerWeb.Shared do
         value={@field.value}
         class={@class}
       />
-      <.errors field={@field} />
+      <.errors field={@field} label={@label} />
     </div>
     """
   end
@@ -167,12 +167,38 @@ defmodule FemtoPlannerWeb.Shared do
 
   def errors(assigns) do
     ~H"""
-    <%= for {error_message, _opts} <- @field.errors do %>
+    <%= for {error_message, opts} <- @field.errors do %>
       <div role="alert" class="text-error m-2 flex gap-1">
         <.icon name="error" />
-        <%= error_message %>
+        <%= full_error_message(@label, error_message, opts) %>
       </div>
     <% end %>
     """
+  end
+
+  defp full_error_message(label, message, opts) do
+    message =
+      if count = opts[:count] do
+        Gettext.dngettext(
+          FemtoPlannerWeb.Gettext,
+          "errors",
+          message,
+          message,
+          count,
+          opts
+        )
+      else
+        Gettext.dgettext(
+          FemtoPlannerWeb.Gettext,
+          "errors",
+          message,
+          opts
+        )
+      end
+
+    dgettext("shared", "%{label} %{message}.",
+      label: label,
+      message: message
+    )
   end
 end

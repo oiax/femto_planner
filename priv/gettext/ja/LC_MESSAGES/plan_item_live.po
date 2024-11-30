@@ -11,18 +11,18 @@ msgstr ""
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: lib/femto_planner_web/live/plan_item_live/edit.html.heex:9
-#: lib/femto_planner_web/live/plan_item_live/new.html.heex:6
+#: lib/femto_planner_web/live/plan_item_live/edit.html.heex:8
+#: lib/femto_planner_web/live/plan_item_live/new.html.heex:5
 #, elixir-autogen, elixir-format
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: lib/femto_planner_web/live/plan_item_live/new.html.heex:10
+#: lib/femto_planner_web/live/plan_item_live/new.html.heex:8
 #, elixir-autogen, elixir-format
 msgid "Create"
 msgstr "作成"
 
-#: lib/femto_planner_web/live/plan_item_live/edit.html.heex:13
+#: lib/femto_planner_web/live/plan_item_live/edit.html.heex:11
 #, elixir-autogen, elixir-format
 msgid "Update"
 msgstr "更新"

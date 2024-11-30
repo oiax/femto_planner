@@ -16,3 +16,8 @@ msgstr ""
 #, elixir-autogen, elixir-format
 msgid "Optional"
 msgstr "省略可"
+
+#: lib/femto_planner_web/components/shared.ex:181
+#, elixir-autogen, elixir-format
+msgid "%{label} %{message}."
+msgstr "%{label}%{message}。"
