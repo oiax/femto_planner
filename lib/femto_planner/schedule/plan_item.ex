@@ -21,16 +21,24 @@ defmodule FemtoPlanner.Schedule.PlanItem do
     field :e_minute, :integer, virtual: true
   end
 
-  @fields [
+  @common_fields [
     :name,
     :description,
-    :all_day,
+    :all_day
+  ]
+
+  @datetime_fields [
     :s_date,
     :s_hour,
     :s_minute,
     :e_date,
     :e_hour,
     :e_minute
+  ]
+
+  @date_fields [
+    :starts_on,
+    :ends_on
   ]
 
   @doc false
@@ -53,12 +61,23 @@ defmodule FemtoPlanner.Schedule.PlanItem do
   end
 
   @doc false
-  def changeset(plan_item, attrs) do
+  def changeset(plan_item, %{"all_day" => "false"} = attrs) do
     plan_item
-    |> cast(attrs, @fields)
+    |> cast(attrs, @common_fields ++ @datetime_fields)
     |> validate_required([])
     |> change_starts_at()
     |> change_ends_at()
+  end
+
+  def changeset(plan_item, %{"all_day" => "true"} = attrs) do
+    plan_item
+    |> cast(attrs, @common_fields ++ @date_fields)
+    |> validate_required([])
+    |> change_time_boundaries()
+  end
+
+  def changeset(plan_item, _attrs) do
+    cast(plan_item, %{}, [])
   end
 
   @doc false
@@ -75,10 +94,18 @@ defmodule FemtoPlanner.Schedule.PlanItem do
       |> get_field(:starts_at)
       |> DateTime.to_date()
 
+    ends_at = get_field(changeset, :ends_at)
+
     ends_on =
-      changeset
-      |> get_field(:ends_at)
-      |> DateTime.to_date()
+      case ends_at do
+        %DateTime{hour: 0, minute: 0} ->
+          ends_at
+          |> DateTime.to_date()
+          |> Date.add(-1)
+
+        _ ->
+          DateTime.to_date(ends_at)
+      end
 
     changeset
     |> cast(attrs, [:all_day])
@@ -118,5 +145,24 @@ defmodule FemtoPlanner.Schedule.PlanItem do
     |> put_change(:e_date, DateTime.to_date(ends_at))
     |> put_change(:e_hour, ends_at.hour)
     |> put_change(:e_minute, ends_at.minute)
+  end
+
+  defp change_time_boundaries(changeset) do
+    s =
+      changeset
+      |> get_field(:starts_on)
+      |> DateTime.new!(Time.new!(0, 0, 0), @time_zone)
+      |> DateTime.shift_zone!("Etc/UTC")
+
+    e =
+      changeset
+      |> get_field(:ends_on)
+      |> DateTime.new!(Time.new!(0, 0, 0), @time_zone)
+      |> DateTime.shift_zone!("Etc/UTC")
+      |> DateTime.add(-1, :day)
+
+    changeset
+    |> put_change(:starts_at, s)
+    |> put_change(:ends_at, e)
   end
 end

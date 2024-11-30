@@ -1,6 +1,5 @@
 defmodule FemtoPlannerWeb.Shared do
   use FemtoPlannerWeb, :html
-  require Logger
 
   attr :name, :string, required: true
 
@@ -53,6 +52,7 @@ defmodule FemtoPlannerWeb.Shared do
       </div>
       <textarea
         id={@field.id}
+        name={@field.name}
         class="textarea textarea-bordered border-gray-500"
       ><%= @field.value %></textarea>
     </div>
@@ -135,8 +135,6 @@ defmodule FemtoPlannerWeb.Shared do
   def checkbox(assigns) do
     assigns =
       assign(assigns, :checked, assigns.field.value in [true, "true"])
-
-    Logger.info("checkbox: #{inspect assigns.field.value}")
 
     ~H"""
     <div class="form-control p-4">
