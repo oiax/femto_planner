@@ -14,7 +14,17 @@ defmodule FemtoPlannerWeb.Shared do
   attr :optional, :boolean
 
   def text_input(assigns) do
-    assigns = assign_new(assigns, :optional, fn -> false end)
+    class =
+      if assigns.field.errors == [] do
+        "input input-bordered border-gray-500"
+      else
+        "input input-bordered border-error border-2"
+      end
+
+    assigns =
+      assigns
+      |> assign_new(:optional, fn -> false end)
+      |> assign(:class, class)
 
     ~H"""
     <div class="form-control p-4">
@@ -29,8 +39,9 @@ defmodule FemtoPlannerWeb.Shared do
         id={@field.id}
         name={@field.name}
         value={@field.value}
-        class="input input-bordered border-gray-500"
+        class={@class}
       />
+      <.errors field={@field} />
     </div>
     """
   end
@@ -151,6 +162,17 @@ defmodule FemtoPlannerWeb.Shared do
         <%= @label %>
       </label>
     </div>
+    """
+  end
+
+  def errors(assigns) do
+    ~H"""
+    <%= for {error_message, _opts} <- @field.errors do %>
+      <div role="alert" class="text-error m-2 flex gap-1">
+        <.icon name="error" />
+        <%= error_message %>
+      </div>
+    <% end %>
     """
   end
 end

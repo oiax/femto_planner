@@ -41,6 +41,10 @@ defmodule FemtoPlanner.Schedule.PlanItem do
     :ends_on
   ]
 
+  @required_fields [
+    :name
+  ]
+
   @doc false
   def changeset do
     current_time = FemtoPlanner.Schedule.current_time()
@@ -64,7 +68,7 @@ defmodule FemtoPlanner.Schedule.PlanItem do
   def changeset(plan_item, %{"all_day" => "false"} = attrs) do
     plan_item
     |> cast(attrs, @common_fields ++ @datetime_fields)
-    |> validate_required([])
+    |> validate_required(@required_fields)
     |> change_starts_at()
     |> change_ends_at()
   end
@@ -72,7 +76,7 @@ defmodule FemtoPlanner.Schedule.PlanItem do
   def changeset(plan_item, %{"all_day" => "true"} = attrs) do
     plan_item
     |> cast(attrs, @common_fields ++ @date_fields)
-    |> validate_required([])
+    |> validate_required(@required_fields)
     |> change_time_boundaries()
   end
 
