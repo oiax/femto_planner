@@ -1,5 +1,14 @@
 defmodule FemtoPlannerWeb.Router do
   use FemtoPlannerWeb, :router
+  require Logger
+
+  def put_cldr_locale_to_session(conn, _opts) do
+    if cldr_locale =  Cldr.Plug.AcceptLanguage.get_cldr_locale(conn) do
+      Plug.Conn.put_session(conn, :cldr_locale, cldr_locale.language)
+    else
+      conn
+    end
+  end
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -8,6 +17,8 @@ defmodule FemtoPlannerWeb.Router do
     plug :put_root_layout, html: {FemtoPlannerWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Cldr.Plug.AcceptLanguage, cldr_backend: FemtoPlanner.Cldr
+    plug :put_cldr_locale_to_session
   end
 
   pipeline :api do
