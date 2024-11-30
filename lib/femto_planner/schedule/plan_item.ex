@@ -5,8 +5,11 @@ defmodule FemtoPlanner.Schedule.PlanItem do
   schema "plan_items" do
     field :name, :string, default: ""
     field :description, :string, default: ""
+    field :all_day, :boolean, default: false
     field :starts_at, :utc_datetime
     field :ends_at, :utc_datetime
+    field :starts_on, :date
+    field :ends_on, :date
 
     timestamps(type: :utc_datetime_usec)
 

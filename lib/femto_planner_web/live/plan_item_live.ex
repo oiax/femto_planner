@@ -123,10 +123,22 @@ defmodule FemtoPlannerWeb.PlanItemLive do
     """
   end
 
-  defp duration(assigns) do
+  defp duration(%{item: %{all_day: false}} = assigns) do
     ~H"""
     <%= format_starts_at(@item) %> - <%= format_ends_at(@item) %>
     """
+  end
+
+  defp duration(%{item: %{all_day: true}} = assigns) do
+    if assigns.item.starts_on == assigns.item.ends_on do
+      ~H"""
+      <%= format_starts_on(@item) %>
+      """
+    else
+      ~H"""
+      <%= format_starts_on(@item) %> - <%= format_ends_on(@item) %>
+      """
+    end
   end
 
   @time_zone Application.compile_env(:femto_planner, :default_time_zone)
@@ -156,6 +168,26 @@ defmodule FemtoPlannerWeb.PlanItemLive do
 
   defp format_datetime(datetime) do
     Schedule.format_datetime(datetime, "%Y-%m-%d (%a) %H:%M")
+  end
+
+  defp format_starts_on(item) do
+    if item.starts_on.year == Schedule.current_time().year do
+      Schedule.format_datetime(item.starts_on, "%m-%d (%a)")
+    else
+      Schedule.format_datetime(item.starts_on, "%Y-%m-%d (%a)")
+    end
+  end
+
+  defp format_ends_on(item) do
+    if item.starts_on.year == item.ends_on.year do
+      Schedule.format_datetime(item.ends_on, "%m-%d (%a)")
+    else
+      Schedule.format_datetime(item.ends_on, "%Y-%m-%d (%a)")
+    end
+  end
+
+  defp format_date(date) do
+    Schedule.format_datetime(date, "%Y-%m-%d (%a)")
   end
 
   defp field_name_class,
