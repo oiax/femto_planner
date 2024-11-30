@@ -1,5 +1,6 @@
 defmodule FemtoPlannerWeb.Shared do
   use FemtoPlannerWeb, :html
+  require Logger
 
   attr :name, :string, required: true
 
@@ -133,14 +134,9 @@ defmodule FemtoPlannerWeb.Shared do
 
   def checkbox(assigns) do
     assigns =
-      assign(
-        assigns,
-        :checked,
-        Phoenix.HTML.Form.normalize_value(
-          "checkbox",
-          assigns.field.value
-        )
-      )
+      assign(assigns, :checked, assigns.field.value in [true, "true"])
+
+    Logger.info("checkbox: #{inspect assigns.field.value}")
 
     ~H"""
     <div class="form-control p-4">

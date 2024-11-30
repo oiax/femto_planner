@@ -61,6 +61,14 @@ defmodule FemtoPlanner.Schedule do
     PlanItem.changeset(plan_item)
   end
 
+  def change_plan_item(plan_item, attrs) do
+    PlanItem.changeset(plan_item, attrs)
+  end
+
+  def change_all_day(plan_item, attrs) do
+    PlanItem.change_all_day(plan_item, attrs)
+  end
+
   def create_plan_item(attrs) do
     %PlanItem{}
     |> PlanItem.changeset(attrs)

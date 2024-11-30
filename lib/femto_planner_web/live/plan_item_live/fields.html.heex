@@ -5,21 +5,24 @@
   optional={true}
 />
 <Shared.checkbox field={@f[:all_day]} label="All day" />
-<div class="grid grid-cols-1 md:grid-cols-2">
-  <Shared.date_and_time_input
-    date_field={@f[:s_date]}
-    hour_field={@f[:s_hour]}
-    minute_field={@f[:s_minute]}
-    label="Start date and time"
-  />
-  <Shared.date_and_time_input
-    date_field={@f[:e_date]}
-    hour_field={@f[:e_hour]}
-    minute_field={@f[:e_minute]}
-    label="End date and time"
-  />
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2">
-  <Shared.date_input field={@f[:starts_on]} label="Start date" />
-  <Shared.date_input field={@f[:ends_on]} label="End date" />
-</div>
+<%= if Ecto.Changeset.get_field(@f.source, :all_day) do %>
+  <div class="grid grid-cols-1 md:grid-cols-2">
+    <Shared.date_input field={@f[:starts_on]} label="Start date" />
+    <Shared.date_input field={@f[:ends_on]} label="End date" />
+  </div>
+<% else %>
+  <div class="grid grid-cols-1 md:grid-cols-2">
+    <Shared.date_and_time_input
+      date_field={@f[:s_date]}
+      hour_field={@f[:s_hour]}
+      minute_field={@f[:s_minute]}
+      label="Start date and time"
+    />
+    <Shared.date_and_time_input
+      date_field={@f[:e_date]}
+      hour_field={@f[:e_hour]}
+      minute_field={@f[:e_minute]}
+      label="End date and time"
+    />
+  </div>
+<% end %>

@@ -24,6 +24,7 @@ defmodule FemtoPlanner.Schedule.PlanItem do
   @fields [
     :name,
     :description,
+    :all_day,
     :s_date,
     :s_hour,
     :s_minute,
@@ -58,6 +59,31 @@ defmodule FemtoPlanner.Schedule.PlanItem do
     |> validate_required([])
     |> change_starts_at()
     |> change_ends_at()
+  end
+
+  @doc false
+  def change_all_day(changeset, %{"all_day" => "false"} = attrs) do
+    changeset
+    |> cast(attrs, [:all_day])
+    |> put_change(:starts_at, changeset.data.starts_at)
+    |> put_change(:ends_at, changeset.data.ends_at)
+  end
+
+  def change_all_day(changeset, %{"all_day" => "true"} = attrs) do
+    starts_on =
+      changeset
+      |> get_field(:starts_at)
+      |> DateTime.to_date()
+
+    ends_on =
+      changeset
+      |> get_field(:ends_at)
+      |> DateTime.to_date()
+
+    changeset
+    |> cast(attrs, [:all_day])
+    |> put_change(:starts_on, starts_on)
+    |> put_change(:ends_on, ends_on)
   end
 
   defp change_starts_at(changeset) do

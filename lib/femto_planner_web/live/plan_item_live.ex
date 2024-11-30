@@ -60,13 +60,37 @@ defmodule FemtoPlannerWeb.PlanItemLive do
 
   def handle_params(%{"id" => id}, _uri, socket)
       when socket.assigns.live_action == :edit do
-    plan_item = Schedule.get_plan_item!(id)
-    changeset = Schedule.change_plan_item(plan_item)
+    changeset =
+      id
+      |> Schedule.get_plan_item!()
+      |> Schedule.change_plan_item()
 
+    socket = assign(socket, :changeset, changeset)
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "change",
+        %{"_target" => ["plan_item", "all_day"], "plan_item" => attrs},
+        socket
+      ) do
     socket =
-      socket
-      |> assign(:plan_item, plan_item)
-      |> assign(:changeset, changeset)
+      assign(
+        socket,
+        :changeset,
+        Schedule.change_all_day(socket.assigns.changeset, attrs)
+      )
+
+    {:noreply, socket}
+  end
+
+  def handle_event("change", %{"plan_item" => attrs}, socket) do
+    socket =
+      assign(
+        socket,
+        :changeset,
+        Schedule.change_plan_item(socket.assigns.changeset.data, attrs)
+      )
 
     {:noreply, socket}
   end
