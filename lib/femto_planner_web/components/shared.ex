@@ -31,7 +31,7 @@ defmodule FemtoPlannerWeb.Shared do
       <div>
         <label for={@field.id} class="font-bold"><%= @label %></label>
         <%= if @optional do %>
-          <small>(Optional)</small>
+          <small>(<%= dgettext("shared", "Optional") %>)</small>
         <% end %>
       </div>
       <input
@@ -58,7 +58,7 @@ defmodule FemtoPlannerWeb.Shared do
       <div>
         <label for={@field.id} class="font-bold"><%= @label %></label>
         <%= if @optional do %>
-          <small>(Optional)</small>
+          <small>(<%= dgettext("shared", "Optional") %>)</small>
         <% end %>
       </div>
       <textarea

@@ -62,6 +62,9 @@ config :femto_planner, FemtoPlanner.Repo,
 # Configures the default time zone
 config :femto_planner, default_time_zone: "Asia/Tokyo"
 
+# Configures the deafult locale
+config :gettext, :default_locale, "ja"
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 

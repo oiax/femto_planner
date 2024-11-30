@@ -1,14 +1,26 @@
-<Shared.text_input field={@f[:name]} label="Name" />
+<Shared.text_input
+  field={@f[:name]}
+  label={dgettext("plan_item", "Name")}
+/>
 <Shared.textarea
   field={@f[:description]}
-  label="Description"
+  label={dgettext("plan_item", "Description")}
   optional={true}
 />
-<Shared.checkbox field={@f[:all_day]} label="All day" />
+<Shared.checkbox
+  field={@f[:all_day]}
+  label={dgettext("plan_item", "All day")}
+/>
 <%= if Ecto.Changeset.get_field(@f.source, :all_day) do %>
   <div class="grid grid-cols-1 md:grid-cols-2">
-    <Shared.date_input field={@f[:starts_on]} label="Start date" />
-    <Shared.date_input field={@f[:ends_on]} label="End date" />
+    <Shared.date_input
+      field={@f[:starts_on]}
+      label={dgettext("plan_item", "Start date")}
+    />
+    <Shared.date_input
+      field={@f[:ends_on]}
+      label={dgettext("plan_item", "End date")}
+    />
   </div>
 <% else %>
   <div class="grid grid-cols-1 md:grid-cols-2">
@@ -16,13 +28,13 @@
       date_field={@f[:s_date]}
       hour_field={@f[:s_hour]}
       minute_field={@f[:s_minute]}
-      label="Start date and time"
+      label={dgettext("plan_item", "Start date and time")}
     />
     <Shared.date_and_time_input
       date_field={@f[:e_date]}
       hour_field={@f[:e_hour]}
       minute_field={@f[:e_minute]}
-      label="End date and time"
+      label={dgettext("plan_item", "End date and time")}
     />
   </div>
 <% end %>

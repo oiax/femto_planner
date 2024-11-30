@@ -1,0 +1,28 @@
+## "msgid"s in this file come from POT (.pot) files.
+###
+### Do not add, change, or remove "msgid"s manually here as
+### they're tied to the ones in the corresponding POT file
+### (with the same domain).
+###
+### Use "mix gettext.extract --merge" or "mix gettext.merge"
+### to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: lib/femto_planner_web/live/plan_item_live/edit.html.heex:9
+#: lib/femto_planner_web/live/plan_item_live/new.html.heex:6
+#, elixir-autogen, elixir-format
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: lib/femto_planner_web/live/plan_item_live/new.html.heex:10
+#, elixir-autogen, elixir-format
+msgid "Create"
+msgstr "作成"
+
+#: lib/femto_planner_web/live/plan_item_live/edit.html.heex:13
+#, elixir-autogen, elixir-format
+msgid "Update"
+msgstr "更新"
